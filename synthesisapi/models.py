@@ -1,7 +1,7 @@
 from mongokit import (Connection, Document)
+import bson
 
 # Paragraph object
-
 class Paragraph(Document):
     __database__ = 'synthesis-api'  # TODO
     __collection__ = 'paragraphs'
@@ -19,21 +19,20 @@ class Paragraph(Document):
         'is_recipe': False
     }
 
-# TODO: should we store Paper objects?
-
 # Query object
-
 class Query(Document):
     _database__ = 'synthesis-api'
     __collection__ = 'queries'
 
     structure = {
-        # key: material_id
-        # list of associated paragraphs
+        'material_id': unicode,
+        'paragraphs': [bson.ObjectId] # Holds paragraph IDs
     }
 
-    required_fields = []
+    required_fields = ['material_id']
 
-    default_values = {}
+    default_values = {
+        'paragraphs': []
+    }
 
 
