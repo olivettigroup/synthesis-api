@@ -85,6 +85,9 @@ def pull_feedback_data():
 @app.route("/get_paragraphs/<material_id>", methods=['GET'])
 def get_paragraphs(material_id):
     # request.args.get('key','')
+
+
+    
     return material_id
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
