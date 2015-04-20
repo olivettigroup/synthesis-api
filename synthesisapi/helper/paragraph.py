@@ -66,3 +66,15 @@ def remove_paragraphs(connection,data):
             query = qy_collection.Query.find_and_modify(
                 {'_id': material_id},
                 update={ '$pull': { 'paragraphs': paragraph_object['_id'] }})
+
+
+''' Gets a list of paragraphs related to the query
+    Input: 
+        connection      mongodb connection
+                        required: have registered Paragraph, Query
+    
+        material_id     id of the given material requested data from
+'''
+def get_paragraphs_of_query(connection, material_id, amt):
+    qy_collection = connection['synthesis-api'].queries
+    return qy_collection.Query.find({'_id': material_id}, limit=amt)
