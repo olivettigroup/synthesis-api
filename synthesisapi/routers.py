@@ -1,6 +1,9 @@
 from mongokit import Connection, Document
 from flask import Flask
-from models import Paragraph
+from models import Paragraph, Query, Feedback
+from flask import render_template
+import helper.paragraph 
+
 
 # Database configuration
 MONGODB_HOST = 'localhost'
@@ -15,17 +18,53 @@ connection = Connection(app.config['MONGODB_HOST'],
                         app.config['MONGODB_PORT'])
 
 connection.register([Paragraph])
-# 
+connection.register([Query])
+connection.register([Feedback])
+
+
+# ================== TESTING
+
+@app.route("/test")
+def test():
+    return render_template('test.html', name='vicky')
+
+# >>> collection = connection['test'].users
+# >>> user = collection.User()
+# >>> user['name'] = u'admin'
+# >>> user['email'] = u'admin@localhost'
+# >>> user.save()
 
 # =================== MIT SERVER - SYNTHESIS-API
 
-# update_paragraphs()
-    # input: {add: {material_id: [paragraphs]}, subtract: {material_id: [paragraphs]}
-    # input: (TODO) list_of_papers_covered
-    # loops through received paragraphs and updates paragraphs and queries
+@app.route("/update_paragraphs", methods=['PUT'])
+def update_paragraphs():
+    # Updates the list of paragraphs and queries
+    # Input 
+    #       update_type (int)      1 = addition, -1 subtraction
+    #       data (array)           [(material_id, paragraph)...]
+    #                              paragraph = {...}
+    # Output
+    #       (success, error)
+    #       where success is a boolean, and error is an error message
+    update_type = request.form["update_type"]
+    if not update_type in (-1,1):
+        return (False, {message: "Update Type is not a valid integer (-1,1)", success: False})
 
-# send_feedback_to(server)
-    # Sends all feedback that hasn't been sent to given server
+    if update_type == 1:
+        add_paragraphs(connection, request.form["data"])
+
+    else:
+        remove_paragraphs(connection, request.form["data"])
+
+    return (True, None)
+
+
+@app.route("/pull_feedback_data", methods=['GET'])
+def pull_feedback_data():
+    # might want to only allow certain users to do this? or not even
+    # make this a method
+    # When feedback is pulled, give userid and timestamp as well
+    return "pull feedback data"
 
  
 # =================== 3RD PARTIES - SYNTHESIS-API
@@ -42,21 +81,6 @@ connection.register([Paragraph])
     # user_id
     # paragraph_id
     # material_id
-
-@app.route("/update_paragraphs", methods=['PUT'])
-def update_paragraphs():
-    # input: type: 1 = addition, -1 subtraction
-    # input: material_id, paragraph
-    # request.form["var"]
-    return "Hello World!"
-
-
-@app.route("/pull_feedback_data", methods=['GET'])
-def pull_feedback_data():
-    # might want to only allow certain users to do this? or not even
-    # make this a method
-    # When feedback is pulled, give userid and timestamp as well
-    return "pull feedback data"
 
 @app.route("/get_paragraphs/<material_id>", methods=['GET'])
 def get_paragraphs(material_id):

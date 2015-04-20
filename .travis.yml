@@ -1,0 +1,24 @@
+language: python
+virtualenv:
+  system_site_packages: true
+services: mongodb
+notifications:
+  slack: predsynth:Biw2rQ9bKt5Rq2768FPaLKvY
+# before_install:
+#  - sudo apt-get install -qq python-numpy python-scipy
+python:
+  - "2.7"
+# command to install dependencies
+install:
+  # Install conda
+  - pip install conda
+  # install deps
+  - conda init
+  # - sudo conda update conda --yes
+  - deps='pip numpy scipy scikit-learn requests nose'
+  - conda create -p $HOME/py --yes $deps "python=$TRAVIS_PYTHON_VERSION"
+  - export PATH=$HOME/py/bin:$PATH
+  # install your own package into the environment
+  - "pip install -r requirements.txt"
+# command to run tests
+script: nosetests
