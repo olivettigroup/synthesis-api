@@ -61,10 +61,12 @@ def update_paragraphs():
 
 @app.route("/pull_feedback_data", methods=['GET'])
 def pull_feedback_data():
-    # might want to only allow certain users to do this? or not even
-    # make this a method
-    # When feedback is pulled, give userid and timestamp as well
-    return "pull feedback data"
+    # TODO: only allow certain api accesss
+    # TODO: make remove occur later??
+    feedback_data = getAllFeedback(connection)
+    removeAllFeedback(connection)
+
+    return feedback_data
 
  
 # =================== 3RD PARTIES - SYNTHESIS-API
@@ -85,7 +87,8 @@ def pull_feedback_data():
 @app.route("/get_paragraphs/<material_id>", methods=['GET'])
 def get_paragraphs(material_id):
     # request.args.get('key','')
-    return get_paragraphs_of_query(connection, material_id)
+    # TODO: defaulting to returning 5
+    return get_paragraphs_of_query(connection, material_id, 5).toArray()
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
 def get_paragraphs_formatted(material_id):

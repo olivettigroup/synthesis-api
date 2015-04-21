@@ -28,8 +28,6 @@ def add_paragraphs(connection,data):
             },
             upsert=True,
             new=True)
-
-        print paragraph_object
          
         # Incudes paragraph into query
         query = qy_collection.Query.find_and_modify(
@@ -74,6 +72,10 @@ def remove_paragraphs(connection,data):
                         required: have registered Paragraph, Query
     
         material_id     id of the given material requested data from
+
+    Returns:
+        Cursor to the list of documents
+
 '''
 def get_paragraphs_of_query(connection, material_id, amt):
     qy_collection = connection['synthesis-api'].queries

@@ -22,13 +22,12 @@ class ModelTester(TestCase):
     self.assertTrue(self.feedback.structure is not None)
 
 
-class ParagraphHelperTester(TestCase):
+class ParagraphQueryAddRemoveTester(TestCase):
     def setUp(self):
         # MongoDB Setup
         self.connection = Connection()
         self.connection.register([Paragraph])
         self.connection.register([Query])
-        self.connection.register([Feedback])
 
         self.pa_collection = self.connection['synthesis-api'].paragraphs
         self.qy_collection = self.connection['synthesis-api'].queries
@@ -198,5 +197,60 @@ class ParagraphHelperTester(TestCase):
         self.single()
         self.multiple()
         self.interleaved_multiple()
+
+        self.pa_collection.remove(self.paragraph_data_1)
+        self.pa_collection.remove(self.paragraph_data_2)
+        self.pa_collection.remove(self.paragraph_data_3)
+        self.qy_collection.remove({'_id': self.material_id_1})
+        self.qy_collection.remove({'_id': self.material_id_2})
+
+class ParagraphGetTester(TestCase):
+    def setUp(self):
+        self.connection = Connection()
+        self.connection.register([Paragraph])
+        self.connection.register([Query])
+
+        self.pa_collection = self.connection['synthesis-api'].paragraphs
+        self.qy_collection = self.connection['synthesis-api'].queries
+
+        self.material_id_1 = '9999999'
+        self.paragraph_data_1 = {'doi': 1, 
+                          'feature_vector': [0,1,0], 
+                          'text': u'testing paragraph for article 1',
+                          'is_recipe': True}
+        self.paragraph_data_2 = {'doi': 2, 
+                          'feature_vector': [1,1,1], 
+                          'text': u'testing paragraph for article 2',
+                          'is_recipe': True}
+        self.small_data = [(self.material_id_1, self.paragraph_data_1)]
+        self.medium_data = [(self.material_id_1, self.paragraph_data_1), (self.material_id_1, self.paragraph_data_2)]
+
+    def get_one(self):
+        phelpers.add_paragraphs(self.connection, self.small_data)
+        paragraphs = phelpers.get_paragraphs_of_query(self.connection, self.material_id_1, 5)
+
+        self.assertTrue(paragraphs.count() == 1)
+        phelpers.remove_paragraphs(self.connection, self.small_data)
+
+    def get_many(self):
+        phelpers.add_paragraphs(self.connection,self.medium_data)
+        paragraphs = phelpers.get_paragraphs_of_query(self.connection, self.material_id_1, 5)
+        self.assertTrue(paragraphs.count() == 1)
+        phelpers.remove_paragraphs(self.connection, self.medium_data)
+
+    def test_all(self):
+        self.pa_collection.remove(self.paragraph_data_1)
+        self.pa_collection.remove(self.paragraph_data_2)
+        self.qy_collection.remove({'_id': self.material_id_1})
+
+        self.get_one()
+        self.get_many()
+
+        self.pa_collection.remove(self.paragraph_data_1)
+        self.pa_collection.remove(self.paragraph_data_2)
+        self.qy_collection.remove({'_id': self.material_id_1})
+
+
+
 
 
