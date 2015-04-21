@@ -33,8 +33,7 @@ def add_paragraphs(connection,data):
         query = qy_collection.Query.find_and_modify(
             {'_id': material_id},
             update=
-            {   '$addToSet': {'paragraphs': paragraph_object['_id'] },
-                '$set': {'_id': material_id}
+            {   '$addToSet': {'paragraphs': paragraph_object['_id'] }
             },
             upsert=True,
             new=True)
