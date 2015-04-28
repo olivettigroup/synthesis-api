@@ -28,12 +28,6 @@ connection.register([Feedback])
 def test():
     return render_template('test.html', name='vicky')
 
-# >>> collection = connection['test'].users
-# >>> user = collection.User()
-# >>> user['name'] = u'admin'
-# >>> user['email'] = u'admin@localhost'
-# >>> user.save()
-
 # =================== MIT SERVER - SYNTHESIS-API
 
 @app.route("/update_paragraphs", methods=['PUT'])
@@ -71,11 +65,6 @@ def pull_feedback_data():
  
 # =================== 3RD PARTIES - SYNTHESIS-API
 
-# get_paragraphs(material_id)
-
-# get_paragraphs_formatted(material_id)
-    # perhaps formatted?
-
 # record_feedback(material_id, paragraph_id, feedback)
     # sanitize inputs!
     # TODO: do we want to store feedback as 1/-1 for now, or complex object 
@@ -86,19 +75,38 @@ def pull_feedback_data():
 
 @app.route("/get_paragraphs/<material_id>", methods=['GET'])
 def get_paragraphs(material_id):
-    # request.args.get('key','')
-    # TODO: defaulting to returning 5
+    # Retrieves a list of paragraphs indicating steps for given material_id
+    # Input 
+    #       material_id (int)      (TODO) type of material_id
+    #       
+    # Output
+    #       paragraphs (array)      Array of paragraph objects
+    #                               (TODO) get rid of _id
+    #       
+    # TODO: defaulting to returning 5??
     return get_paragraphs_of_query(connection, material_id, 5).toArray()
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
 def get_paragraphs_formatted(material_id):
+    # TODO what kind of formatting?
     return "get paragraphs formatted: " +  material_id
 
 @app.route("/record_feedback", methods=['POST'])
 def record_mpid_feedback():
+    # TODO probably want some authorization of 3rd party API?
+    # TODO how do we ensure that user_id is a real user id - security
+    # TODO, are we compiling here?
+    # TODO: check valid material id here?
+    request.form["user_id"]
+    request.form["paragraph_id"]
+    request.form["material_id"]
+    request.form[""]
     return "record feedback"
 
 def record_is_recipe_feedback():
+    # TODO
+    # TODO probably want some authorization of 3rd party API?
+    # TODO how do we ensure that user_id is a real user id - security
     return "is recipe feedback"
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 # With paragraph and query objects
 from bson import ObjectId
 
-''' Adds paragraphs to given queries
+''' Adds paragraphs to given query-paragraph pair
     Input:
         connection      mongodb connection
                         required: have registered Paragraph, Query
@@ -39,7 +39,7 @@ def add_paragraphs(connection,data):
             new=True)
 
 
-''' Removes paragraphs for the given queries
+''' Removes paragraphs for the given query-paragraph pairs
     Input:
         connection      mongodb connection
                         required: have registered Paragraph, Query
