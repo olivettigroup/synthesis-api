@@ -205,6 +205,7 @@ class ParagraphQueryAddRemoveTester(TestCase):
         self.qy_collection.remove({'_id': self.material_id_2})
 
 class ParagraphGetTester(TestCase):
+    # TODO: add test case with various queries in db, but getting one
     def setUp(self):
         self.connection = Connection()
         self.connection.register([Paragraph])
@@ -230,12 +231,14 @@ class ParagraphGetTester(TestCase):
         paragraphs = phelpers.get_paragraphs_of_query(self.connection, self.material_id_1, 5)
 
         self.assertTrue(paragraphs.count() == 1)
+    
         phelpers.remove_paragraphs(self.connection, self.small_data)
 
     def get_many(self):
         phelpers.add_paragraphs(self.connection,self.medium_data)
         paragraphs = phelpers.get_paragraphs_of_query(self.connection, self.material_id_1, 5)
-        self.assertTrue(paragraphs.count() == 1)
+        self.assertTrue(paragraphs.count() == 2)
+
         phelpers.remove_paragraphs(self.connection, self.medium_data)
 
     def test_all(self):

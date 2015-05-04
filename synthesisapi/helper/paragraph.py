@@ -65,6 +65,22 @@ def remove_paragraphs(connection,data):
                 update={ '$pull': { 'paragraphs': paragraph_object['_id'] }})
 
 
+''' Gets a list of paragraphs ids related to the query
+    Input: 
+        connection      mongodb connection
+                        required: have registered Paragraph, Query
+    
+        material_id     id of the given material requested data from
+
+    Returns:
+        Cursor to the list of ids
+
+'''
+def get_paragraph_ids_of_query(connection, material_id, amt):
+    qy_collection = connection['synthesis-api'].queries
+    return qy_collection.Query.find({'_id': material_id}, {'_id': False}, limit=amt)
+
+
 ''' Gets a list of paragraphs related to the query
     Input: 
         connection      mongodb connection
@@ -73,9 +89,15 @@ def remove_paragraphs(connection,data):
         material_id     id of the given material requested data from
 
     Returns:
-        Cursor to the list of documents
+        Cursor to the list of paragraph objects
 
 '''
 def get_paragraphs_of_query(connection, material_id, amt):
-    qy_collection = connection['synthesis-api'].queries
-    return qy_collection.Query.find({'_id': material_id}, limit=amt)
+    ids = list(get_paragraph_ids_of_query(connection, material_id, amt).limit(amt))
+    pa_collection = connection['synthesis-api'].paragraphs
+
+    paragraphs = ids[0]['paragraphs']
+    paragraph_query = [{"_id": pid} for pid in paragraphs]
+
+    return pa_collection.find({"$or": paragraph_query}, {'_id': False})
+

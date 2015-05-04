@@ -2,7 +2,8 @@ from mongokit import Connection, Document
 from flask import Flask
 from models import Paragraph, Query, Feedback
 from flask import render_template
-import helper.paragraph 
+import helper.paragraph as pa_helper
+import helper.feedback as fb_helper
 
 
 # Database configuration
@@ -45,10 +46,10 @@ def update_paragraphs():
         return (False, {message: "Update Type is not a valid integer (-1,1)", success: False})
 
     if update_type == 1:
-        add_paragraphs(connection, request.form["data"])
+        pa_helper.add_paragraphs(connection, request.form["data"])
 
     else:
-        remove_paragraphs(connection, request.form["data"])
+        pa_helper.remove_paragraphs(connection, request.form["data"])
 
     return (True, None)
 
@@ -56,22 +57,15 @@ def update_paragraphs():
 @app.route("/pull_feedback_data", methods=['GET'])
 def pull_feedback_data():
     # TODO: only allow certain api accesss
-    # TODO: make remove occur later??
-    feedback_data = getAllFeedback(connection)
-    removeAllFeedback(connection)
+    # TODO: consolidate for query etc here!
+    # TODO, are we compiling here? yes - considolate per paragraph_d / paragraph_id + material_id
+    feedback_data = fb_helper.getAllFeedback(connection)
+    fb_helper.removeAllFeedback(connection)  #could potentially move this to after feedback is sent
 
     return feedback_data
 
  
 # =================== 3RD PARTIES - SYNTHESIS-API
-
-# record_feedback(material_id, paragraph_id, feedback)
-    # sanitize inputs!
-    # TODO: do we want to store feedback as 1/-1 for now, or complex object 
-    # accpts true or false: to the question is_recipe?
-    # user_id
-    # paragraph_id
-    # material_id
 
 @app.route("/get_paragraphs/<material_id>", methods=['GET'])
 def get_paragraphs(material_id):
@@ -84,26 +78,38 @@ def get_paragraphs(material_id):
     #                               (TODO) get rid of _id
     #       
     # TODO: defaulting to returning 5??
-    return get_paragraphs_of_query(connection, material_id, 5).toArray()
+    amt = 5
+    return list(get_paragraphs_of_query(connection, material_id, amt).limit(amt))
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
-def get_paragraphs_formatted(material_id):
-    # TODO what kind of formatting?
+def get_paragraphs_formatted(material_id, format="plain/text"):
+    switch(format){
+        case "plain/text":
+            return get_paragraphs
+    }
+
     return "get paragraphs formatted: " +  material_id
 
 @app.route("/record_feedback", methods=['POST'])
 def record_mpid_feedback():
     # TODO probably want some authorization of 3rd party API?
-    # TODO how do we ensure that user_id is a real user id - security
-    # TODO, are we compiling here?
-    # TODO: check valid material id here?
-    request.form["user_id"]
-    request.form["paragraph_id"]
-    request.form["material_id"]
-    request.form[""]
+    # TODO: check valid material id & paragraph_id yes
+    user_id = request.form["user_id"]
+    paragraph_id = request.form["paragraph_id"]
+    #TODO validate paragraph id as input
+    material_id = request.form["material_id"]
+    #TODO validate material id as input (it exists)
+    value = request.form["value"]
+    #TODO validate value
+    ftype = "IS_RELATED_RECIPE"
+
+    fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
+
+    # TODO: add cooldown time so cant record from same user
     return "record feedback"
 
 def record_is_recipe_feedback():
+    ftpye = "IS_RECIPE"
     # TODO
     # TODO probably want some authorization of 3rd party API?
     # TODO how do we ensure that user_id is a real user id - security
