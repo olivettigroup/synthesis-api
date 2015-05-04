@@ -12,11 +12,10 @@ def removeAllFeedback(connection):
     fb_collection = connection['synthesis-api'].feedback
     fb_collection.remove()
 
-
-def createFeedback(connection, material_id, paragraph_id, user_id, type, value):
+def createFeedback(connection, material_id, paragraph_id, user_id, ftype, value):
     fb_collection = connection['synthesis-api'].feedback
     feedback = fb_collection.Feedback()
-    feedback['material_id'] = u''
+    feedback['material_id'] = u'' 
     feedback['paragraph_id'] = u''
     feedback['user_id'] = u''
     feedback['type'] # IS_RECIPE or IS_RELATED_RECIPE (unicode)

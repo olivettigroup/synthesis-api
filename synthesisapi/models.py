@@ -26,14 +26,15 @@ class Query(Document):
     __collection__ = 'queries'
 
     structure = {
-        # _id is material_id
-        'paragraphs': [bson.ObjectId] # Holds paragraph IDs
+        'material_id': unicode, 
+        'paragraph': bson.ObjectId, # Holds one paragraph ID
+        'rank': int #Holds the rank of the paragraph given the query
     }
 
-    required_fields = []
+    required_fields = ['paragraph']
 
     default_values = {
-        'paragraphs': []
+        'rank': 0
     }
 
 # Feedback Object

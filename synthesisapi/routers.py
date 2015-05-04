@@ -93,12 +93,12 @@ def get_paragraphs_formatted(material_id, format="plain/text"):
 @app.route("/record_feedback", methods=['POST'])
 def record_mpid_feedback():
     # TODO probably want some authorization of 3rd party API?
-    # TODO: check valid material id & paragraph_id yes
     user_id = request.form["user_id"]
     paragraph_id = request.form["paragraph_id"]
-    #TODO validate paragraph id as input
     material_id = request.form["material_id"]
-    #TODO validate material id as input (it exists)
+    isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
+    if not isvalid:
+        return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
     value = request.form["value"]
     #TODO validate value
     ftype = "IS_RELATED_RECIPE"

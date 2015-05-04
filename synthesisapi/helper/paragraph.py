@@ -7,7 +7,7 @@ from bson import ObjectId
         connection      mongodb connection
                         required: have registered Paragraph, Query
     
-        data            [(material_id, paragraph)...]                             
+        data            [(material_id, paragraph, rank)...]                             
                         paragraph = {...}
     Output:
 '''
@@ -16,7 +16,7 @@ def add_paragraphs(connection,data):
     qy_collection = connection['synthesis-api'].queries
 
     # TODO: do we need a try/catch?
-    for (material_id, paragraph) in data:
+    for (material_id, paragraph, rank) in data:
         # Creating a paragraph object if it does not exist
         paragraph_object = pa_collection.Paragraph.find_and_modify(
             {'doi': paragraph['doi'], 'text': paragraph['text']},
@@ -31,9 +31,11 @@ def add_paragraphs(connection,data):
          
         # Incudes paragraph into query
         query = qy_collection.Query.find_and_modify(
-            {'_id': material_id},
-            update=
-            {   '$addToSet': {'paragraphs': paragraph_object['_id'] }
+            {'material_id': material_id, 'paragraph': paragraph_object['_id']},
+            update={
+                'material_id': material_id,
+                'rank': rank,
+                'paragraph': paragraph_object['_id']
             },
             upsert=True,
             new=True)
@@ -53,16 +55,15 @@ def remove_paragraphs(connection,data):
     qy_collection = connection['synthesis-api'].queries
 
     # TODO: do we need a try/catch?
-    for (material_id, paragraph) in data:
+    for (material_id, paragraph, rank) in data:
         # Finds the paragraph object
         paragraph_object = pa_collection.Paragraph.find_one(
             {'doi': paragraph['doi'], 'text': paragraph['text']})
         
         if paragraph_object is not None:
             # Removes paragraph object from query  
-            query = qy_collection.Query.find_and_modify(
-                {'_id': material_id},
-                update={ '$pull': { 'paragraphs': paragraph_object['_id'] }})
+            query = qy_collection.remove(
+                {'material_id': material_id, 'paragraph': paragraph_object['_id']})
 
 
 ''' Gets a list of paragraphs ids related to the query
@@ -78,7 +79,8 @@ def remove_paragraphs(connection,data):
 '''
 def get_paragraph_ids_of_query(connection, material_id, amt):
     qy_collection = connection['synthesis-api'].queries
-    return qy_collection.Query.find({'_id': material_id}, {'_id': False}, limit=amt)
+    # Currently just returns 5, not ranked. Sort later when rank means something
+    return qy_collection.Query.find({'material_id': material_id}, {'_id': False}, limit=amt)
 
 
 ''' Gets a list of paragraphs related to the query
@@ -93,11 +95,20 @@ def get_paragraph_ids_of_query(connection, material_id, amt):
 
 '''
 def get_paragraphs_of_query(connection, material_id, amt):
-    ids = list(get_paragraph_ids_of_query(connection, material_id, amt).limit(amt))
     pa_collection = connection['synthesis-api'].paragraphs
-
-    paragraphs = ids[0]['paragraphs']
-    paragraph_query = [{"_id": pid} for pid in paragraphs]
+    ids = list(get_paragraph_ids_of_query(connection, material_id, amt).limit(amt))
+    
+    paragraph_query = [{'_id': item['paragraph']} for item in ids]
 
     return pa_collection.find({"$or": paragraph_query}, {'_id': False})
 
+''' Validates if the paragraph-query given is a valid pair
+    Input:
+
+    Returns:
+        True if it is a valid pair, false otherwise
+'''
+def validate_paragraph_query(connection, paragraph_id, material_id):
+    qy_collection = connection['synthesis-api'].queries
+    doc = qy_collection.Query.find_one({'material_id': material_id, 'paragraph': paragraph_id})
+    return (doc is not None)
