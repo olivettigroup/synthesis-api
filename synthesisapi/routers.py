@@ -35,8 +35,8 @@ def test():
 def update_paragraphs():
     # Updates the list of paragraphs and queries
     # Input 
-    #       update_type (int)      1 = addition, -1 subtraction
-    #       data (array)           [(material_id, paragraph)...]
+    #       update_type (int)      1 = addition, -1 subtraction TODO: might want to separate this into 2 functions
+    #       data (array)           [(material_id, paragraph)...] or put it inside here <--
     #                              paragraph = {...}
     # Output
     #       (success, error)
@@ -47,7 +47,6 @@ def update_paragraphs():
 
     if update_type == 1:
         pa_helper.add_paragraphs(connection, request.form["data"])
-
     else:
         pa_helper.remove_paragraphs(connection, request.form["data"])
 
@@ -64,14 +63,42 @@ def pull_feedback_data():
     # Output:
     #       {'related': is_related_recipe_feedback, 'is_recipe': is_recipe_feedback}
     #       Both of these are 
-    
-    is_recipe_feedback = fb_helper.getIsRecipeFeedback(connection)
-    is_related_recipe_feedback = fb_helper.getIsRelatedRecipeFeedback(connection)    
 
-    fb_helper.removeAllFeedback(connection)  #could potentially move this to after feedback is sent
+    # Getting is recipe feedback
+    is_recipe_feedback = 'No data'
+    recipeContent = fb_helper.getIsRecipeFeedback(connection)
+    if (recipeContent['ok'] == 1):
+        is_recipe_feedback = recipeContent
+    else:
+        is_recipe_feedback = 'Error: Could not retrieve.'
+    
+    # Getting is related recipe feedback
+    isRelatedContent = fb_helper.getIsRelatedRecipeFeedback(connection)    
+    if (isRelatedContent['ok'] == 1):
+        is_related_recipe_feedback = isRelatedContent
+    else:
+        is_related_recipe_feedback = 'Error: Could not retrieve.'
 
     return {'related': is_related_recipe_feedback, 'is_recipe': is_recipe_feedback}
 
+@app.route("/confirm_feedback_data_pulled", methods=['PUT'])
+def indicate_successful_pull():
+    #   Function used by users to confirm they hae pulled data until time
+    #   Input:
+    #       time            the date + time they pulled the data (in secs)
+    #
+    time = request.form["time"]
+    got_related = request.form["got_related"]
+    got_is_recipe = request.form["got_is_recipe"]
+
+    if (got_related && got_is_recipe):
+        fb_helper.removeAllFeedbackBefore(connection, time)
+    elif (got_related):
+        fb_helper.removeAllRelatedFeedbackBefore(connection, time)
+    else:
+        fb_helper.removeAllIsRecipeFeedbackBefore(connection, time)
+
+    return "success?" #TODO
  
 # =================== 3RD PARTIES - SYNTHESIS-API
 
@@ -80,6 +107,7 @@ def get_paragraphs(material_id):
     # Retrieves a list of paragraphs indicating steps for given material_id
     # Input 
     #       material_id (int)      (TODO) type of material_id
+    #       format (string)         Format the data will be in.
     #       
     # Output
     #       paragraphs (array)      Array of paragraph objects
@@ -90,28 +118,31 @@ def get_paragraphs(material_id):
     return list(get_paragraphs_of_query(connection, material_id, amt).limit(amt))
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
-def get_paragraphs_formatted(material_id, format="plain/text"):
+def get_paragraphs_formatted(material_id, format="json"):
     switch(format){
-        case "plain/text":
-            return get_paragraphs
+        case "json":
+            return get_paragraphs(material_id)
+        default:
+            return get_paragraphs(material_id)
     }
-
-    return "get paragraphs formatted: " +  material_id
 
 @app.route("/record_feedback", methods=['POST'])
 def record_mpid_feedback():
     # TODO probably want some authorization of 3rd party API?
+    ftype = "IS_RELATED_RECIPE"
     user_id = request.form["user_id"]
     paragraph_id = request.form["paragraph_id"]
     material_id = request.form["material_id"]  
     isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
+    value = request.form["value"]
+
+    #Input Checking
     if not isvalid:
         return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
-    value = request.form["value"]
     if value not in [-1, 1]:
         return {'error': True, 'msg': "Not valid value"}
-    ftype = "IS_RELATED_RECIPE"
-
+    
+    # Creating Feedback
     fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
 
     # TODO: add cooldown time so cant record from same user

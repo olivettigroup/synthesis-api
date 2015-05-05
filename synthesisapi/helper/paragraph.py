@@ -80,7 +80,10 @@ def remove_paragraphs(connection,data):
 def get_paragraph_ids_of_query(connection, material_id, amt):
     qy_collection = connection['synthesis-api'].queries
     # Currently just returns 5, not ranked. Sort later when rank means something
-    return qy_collection.Query.find({'material_id': material_id}, {'_id': False}, limit=amt)
+    try:
+        return qy_collection.Query.find({'material_id': material_id}, {'_id': False}, limit=amt)
+    except TypeError: 
+        return #error
 
 
 ''' Gets a list of paragraphs related to the query
