@@ -103,24 +103,36 @@ def record_mpid_feedback():
     # TODO probably want some authorization of 3rd party API?
     user_id = request.form["user_id"]
     paragraph_id = request.form["paragraph_id"]
-    material_id = request.form["material_id"]
+    material_id = request.form["material_id"]  
     isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
     if not isvalid:
         return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
     value = request.form["value"]
-    #TODO validate value
+    if value not in [-1, 1]:
+        return {'error': True, 'msg': "Not valid value"}
     ftype = "IS_RELATED_RECIPE"
 
     fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
 
     # TODO: add cooldown time so cant record from same user
-    return "record feedback"
+    return "is correct pair feedback"
 
+@app.route("/record_is_recipe_feedback", methods=['POST'])
 def record_is_recipe_feedback():
     ftpye = "IS_RECIPE"
-    # TODO
     # TODO probably want some authorization of 3rd party API?
-    # TODO how do we ensure that user_id is a real user id - security
+    user_id = request.form["user_id"]
+    paragraph_id = request.form["paragraph_id"]
+    material_id = request.form["material_id"]   #TODO: might not want to require this later
+    isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
+    if not isvalid:
+        return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
+    value = request.form["value"]
+    if value not in [-1, 1]:
+        return {'error': True, 'msg': "Not valid value"}
+    ftype = "IS_RELATED_RECIPE"
+
+    fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
     return "is recipe feedback"
 
 if __name__ == "__main__":
