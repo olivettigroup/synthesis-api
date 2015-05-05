@@ -56,13 +56,21 @@ def update_paragraphs():
 
 @app.route("/pull_feedback_data", methods=['GET'])
 def pull_feedback_data():
-    # TODO: only allow certain api accesss
-    # TODO: consolidate for query etc here!
-    # TODO, are we compiling here? yes - considolate per paragraph_d / paragraph_id + material_id
-    feedback_data = fb_helper.getAllFeedback(connection)
+    # Pulls two types of considolated feedback data:
+    #       1) Feedback on if a paragraph is a recipe
+    #       2) Feedback on if a paragraph is a recipe for a specific material
+    # Required: API Access @TODO
+    #   
+    # Output:
+    #       {'related': is_related_recipe_feedback, 'is_recipe': is_recipe_feedback}
+    #       Both of these are 
+    
+    is_recipe_feedback = fb_helper.getIsRecipeFeedback(connection)
+    is_related_recipe_feedback = fb_helper.getIsRelatedRecipeFeedback(connection)    
+
     fb_helper.removeAllFeedback(connection)  #could potentially move this to after feedback is sent
 
-    return feedback_data
+    return {'related': is_related_recipe_feedback, 'is_recipe': is_recipe_feedback}
 
  
 # =================== 3RD PARTIES - SYNTHESIS-API

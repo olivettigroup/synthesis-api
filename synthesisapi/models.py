@@ -47,7 +47,7 @@ class Feedback(Document):
         'paragraph_id': unicode,
         'user_id': unicode,         #id of the user who gave feedback
         'type': unicode,            #IS_RECIPE or IS_RELATED_RECIPE
-        'value': bool,              #answer to the type question
+        'value': int,              #answer to the type question
         'date_creation': datetime.datetime
     }
 

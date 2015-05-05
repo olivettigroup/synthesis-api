@@ -60,16 +60,14 @@ class ParagraphQueryAddRemoveTester(TestCase):
 
         # Checking that the paragraph object was created
         paragraph_object = self.pa_collection.Paragraph.find_one(self.paragraph_data_1) 
-        print "paragraph object", paragraph_object
-        print self.pa_collection.count()
+        
         self.assertTrue(self.pa_collection.count() == 1)
         self.assertTrue(paragraph_object is not None)
 
         # Checking that the query object was created
         self.assertTrue(self.qy_collection.count() == 1)
-        print self.qy_collection.Query.find_one({'material_id': self.material_id_1})
+        
         query_object = self.qy_collection.Query.find_one({'material_id': self.material_id_1, 'paragraph': paragraph_object['_id']})
-        print "query object", query_object
         self.assertTrue(query_object is not None)
 
         # Removing the paragraph
@@ -77,7 +75,7 @@ class ParagraphQueryAddRemoveTester(TestCase):
 
         # Checking that the query object was removed
         qy_object = self.qy_collection.Query.find_one({'material_id': self.material_id_1, 'paragraph': paragraph_object['_id']})
-        print "qy object", qy_object
+        
         self.assertTrue(qy_object is None )
         self.assertTrue(self.qy_collection.count() == 0)
 
@@ -101,12 +99,6 @@ class ParagraphQueryAddRemoveTester(TestCase):
         self.assertTrue(self.qy_collection.count() == 2)
         self.assertTrue(query_object_1 is not None)
         self.assertTrue(query_object_2 is not None)
-
-        # Printing
-        print "Paragraph object 1", paragraph_object_1
-        print "Paragraph object 2", paragraph_object_2
-        print "Query object 1", query_object_1
-        print "Query object 2", query_object_2
         
         # Removing the paragraph
         phelpers.remove_paragraphs(self.connection, self.medium_data)
@@ -142,13 +134,6 @@ class ParagraphQueryAddRemoveTester(TestCase):
         self.assertTrue(self.qy_collection.count() == 3)
         self.assertTrue(query_object_1 is not None)
         self.assertTrue(query_object_2 is not None)
-
-        # Printing
-        print "Paragraph object 1", paragraph_object_1
-        print "Paragraph object 2", paragraph_object_2
-        print "Paragraph object 3", paragraph_object_3
-        print "Query object 1", query_object_1
-        print "Query object 2", query_object_2
         
         # Removing one paragraph
         phelpers.remove_paragraphs(self.connection, self.small_data)
@@ -260,4 +245,140 @@ class ParagraphGetTester(TestCase):
         self.qy_collection.remove({'material_id': self.material_id_1})
         self.qy_collection.remove({'material_id': self.material_id_2})
 
+class FeedbackCreateTester(TestCase):
+    def setUp(self):
+        # MongoDB Setup
+        self.connection = Connection()
+        self.connection.register([Feedback])
+
+        self.fb_collection = self.connection['synthesis-api'].feedback
+
+        # Data setup
+        self.material_id_1 = '9999999'
+        self.material_id_2 = '1000000'
+        self.f1 = {'material_id': self.material_id_1, 
+                   'paragraph_id': '1', 
+                   'user_id': u'vickyg',
+                   'type': "IS_RELATED_RECIPE",
+                   'value': True}
+        self.f2 = {'material_id': self.material_id_2, 
+                   'paragraph_id': '2', 
+                   'user_id': u'vickyg1',
+                   'type': "IS_RECIPE",
+                   'value': True}
+        self.f3 = {'material_id': self.material_id_1, 
+                   'paragraph_id': '1', 
+                   'user_id': u'vickyg1',
+                   'type': "IS_RELATED_RECIPE",
+                   'value': False}
+
+    def is_recipe_create_test(self):
+        fhelpers.createFeedback(self.connection,
+                                self.f1['material_id'],
+                                self.f1['paragraph_id'],
+                                self.f1['user_id'],
+                                self.f1['type'],
+                                self.f1['value'] )
+
+        fb_object = self.fb_collection.Feedback.find_one(self.f1)
+        self.assertTrue(fb_object is not None)
+
+        # Delete feedback
+        self.fb_collection.remove(self.f1)
+
+    def is_related_recipe_create(self):
+        fhelpers.createFeedback(self.connection,
+                                self.f2['material_id'],
+                                self.f2['paragraph_id'],
+                                self.f2['user_id'],
+                                self.f2['type'],
+                                self.f2['value'] )
+
+        fb_object = self.fb_collection.Feedback.find_one(self.f2)
+        self.assertTrue(fb_object is not None)
+
+        # Delete feedback
+        self.fb_collection.remove(self.f2)
+
+
+    def test_suite(self):
+        self.fb_collection.remove(self.f1)
+        self.fb_collection.remove(self.f2)
+
+        self.is_related_recipe_create()
+        self.is_recipe_create_test()
+
+        self.fb_collection.remove(self.f1)
+        self.fb_collection.remove(self.f2)
+
+class FeedbackGetTester(TestCase):
+    def setUp(self):
+        # MongoDB Setup
+        self.connection = Connection()
+        self.connection.register([Feedback])
+
+        self.fb_collection = self.connection['synthesis-api'].feedback
+
+        # Data setup
+        self.material_id_1 = '9999999'
+        self.material_id_2 = '1000000'
+        self.f1 = {'material_id': self.material_id_1, 
+                   'paragraph_id': '1', 
+                   'user_id': u'vickyg',
+                   'type': "IS_RELATED_RECIPE",
+                   'value': 1}
+        self.f2 = {'material_id': self.material_id_2, 
+                   'paragraph_id': '2', 
+                   'user_id': u'vickyg1',
+                   'type': "IS_RECIPE",
+                   'value': 1}
+        self.f3 = {'material_id': self.material_id_1, 
+                   'paragraph_id': '1', 
+                   'user_id': u'vickyg1',
+                   'type': "IS_RELATED_RECIPE",
+                   'value': -1}
+        self.f4 = {'material_id': self.material_id_2, 
+                   'paragraph_id': '1', 
+                   'user_id': u'vickyg1',
+                   'type': "IS_RELATED_RECIPE",
+                   'value': -1}
+
+
+    def check_get(self):
+        for fb in [self.f1, self.f2, self.f3, self.f4]:
+            fhelpers.createFeedback(self.connection,
+                                    fb['material_id'],
+                                    fb['paragraph_id'],
+                                    fb['user_id'],
+                                    fb['type'],
+                                    fb['value'] )
+
+        result = fhelpers.getIsRecipeFeedback(self.connection)
+        items = result['result']
+        self.assertTrue(result['ok'] == 1)
+        self.assertTrue(len(items) == 1)
+        self.assertTrue(items[0]['feedback'] == [1])
+
+        result = fhelpers.getIsRelatedRecipeFeedback(self.connection)
+        items = result['result']
+        self.assertTrue(result['ok'] == 1)
+        self.assertTrue(len(items) == 2)
+
+        # Checking mateiral_id: 1 and paragraph: 1 were aggregated properly
+        self.assertTrue(items[0]['feedback'] == [-1])
+        self.assertTrue(items[1]['feedback'] == [1,-1])
+        
+
+    def test_suite(self):
+        self.fb_collection.remove(self.f1)
+        self.fb_collection.remove(self.f2)
+        self.fb_collection.remove(self.f3)
+        self.fb_collection.remove(self.f4)
+
+        self.check_get()
+
+        self.fb_collection.remove(self.f1)
+        self.fb_collection.remove(self.f2)
+        self.fb_collection.remove(self.f3)
+        self.fb_collection.remove(self.f4)
 
