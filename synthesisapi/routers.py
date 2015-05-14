@@ -1,7 +1,9 @@
+from flask import jsonify
 from mongokit import Connection, Document
 from flask import Flask
 from models import Paragraph, Query, Feedback
 from flask import render_template
+from flask import request
 import helper.paragraph as pa_helper
 import helper.feedback as fb_helper
 
@@ -29,27 +31,45 @@ def test():
     return render_template('test.html', name='vicky')
 
 # =================== MIT SERVER - SYNTHESIS-API
-
-@app.route("/update_paragraphs", methods=['PUT'])
+# DONE
+@app.route("/update_paragraphs", methods=['POST', 'PUT'])
 def update_paragraphs():
     # Updates the list of paragraphs and queries
     # Input 
     #       update_type (int)      1 = addition, -1 subtraction TODO: might want to separate this into 2 functions
-    #       data (array)           [(material_id, paragraph)...] or put it inside here <--
-    #                              paragraph = {...}
+    #       material_id            
+    #       paragraph_text  
+    #       rank
+    #       feature_vector         Each element in array concatenated by "," e.g. "1,2,3" = [1,2,3]
+    #       is_recipe
+    #       doi     
     # Output
     #       (success, error)
     #       where success is a boolean, and error is an error message
-    update_type = request.form["update_type"]
+    try:
+        update_type = int(request.form["update_type"])
+    except ValueError:
+        return jsonify(success=False, error_message="Update Type is not a valid integer (-1,1)")
+
     if not update_type in (-1,1):
-        return (False, {message: "Update Type is not a valid integer (-1,1)", success: False})
+        return jsonify(success=False, error_message="Update Type is not a valid integer (-1,1)")
+
+    paragraph = {
+        'doi': request.form["doi"],
+        'text': request.form["paragraph_text"],
+        'is_recipe': request.form["is_recipe"],
+        'feature_vector': pa_helper.parse_feature_vector(request.form["feature_vector"])
+    } 
 
     if update_type == 1:
-        pa_helper.add_paragraphs(connection, request.form["data"])
+        result = pa_helper.add_paragraphs(connection, request.form["material_id"], paragraph, request.form["rank"])
     else:
-        pa_helper.remove_paragraphs(connection, request.form["data"])
+        result = pa_helper.remove_paragraphs(connection, request.form["material_id"], paragraph, request.form["rank"])
 
-    return (True, None)
+    if not result:
+        return jsonify(success=False, error="Could not add/remove paragraphs")
+
+    return jsonify(success=True, error=None)
 
 
 @app.route("/pull_feedback_data", methods=['GET'])
@@ -90,7 +110,7 @@ def indicate_successful_pull():
     got_related = request.form["got_related"]
     got_is_recipe = request.form["got_is_recipe"]
 
-    if (got_related && got_is_recipe):
+    if (got_related and got_is_recipe):
         fb_helper.removeAllFeedbackBefore(connection, time)
     elif (got_related):
         fb_helper.removeAllRelatedFeedbackBefore(connection, time)
@@ -113,16 +133,15 @@ def get_paragraphs(material_id):
     #                               (TODO) get rid of _id
     #       
     amt = 5
-    return list(get_paragraphs_of_query(connection, material_id, amt).limit(amt))
+    result = pa_helper.get_paragraphs_of_query(connection, material_id, amt)
+    return jsonify(paragraphs=result)
 
 @app.route("/get_paragraphs_formatted/<material_id>", methods=['GET'])
 def get_paragraphs_formatted(material_id, format="json"):
-    switch(format){
-        case "json":
-            return get_paragraphs(material_id)
-        default:
-            return get_paragraphs(material_id)
-    }
+    if (format == 'json'):
+        return get_paragraphs(material_id)
+    else:
+        return get_paragraphs(material_id)
 
 @app.route("/record_feedback", methods=['POST'])
 def record_mpid_feedback():

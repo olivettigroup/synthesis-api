@@ -10,25 +10,26 @@ from bson import ObjectId
         data            [(material_id, paragraph, rank)...]                             
                         paragraph = {...}
     Output:
+        success         Boolean indicating success
 '''
-def add_paragraphs(connection,data):
+def add_paragraphs(connection, material_id, paragraph, rank):
     pa_collection = connection['synthesis-api'].paragraphs
     qy_collection = connection['synthesis-api'].queries
 
     # TODO: do we need a try/catch?
-    for (material_id, paragraph, rank) in data:
+    # TODO: check it is correct format
+    try:
         # Creating a paragraph object if it does not exist
         paragraph_object = pa_collection.Paragraph.find_and_modify(
             {'doi': paragraph['doi'], 'text': paragraph['text']},
             update={'$setOnInsert': { 
-                            'feature_vector': paragraph['feature_vector'],
-                            'is_recipe': paragraph['is_recipe'],
-                            'doi': paragraph['doi'], 
-                            'text': paragraph['text'] }
+                'feature_vector': paragraph['feature_vector'],
+                'is_recipe': paragraph['is_recipe'],
+                'doi': paragraph['doi'], 
+                'text': paragraph['text'] }
             },
             upsert=True,
             new=True)
-         
         # Incudes paragraph into query
         query = qy_collection.Query.find_and_modify(
             {'material_id': material_id, 'paragraph': paragraph_object['_id']},
@@ -39,7 +40,9 @@ def add_paragraphs(connection,data):
             },
             upsert=True,
             new=True)
-
+        return True
+    except:
+        return False
 
 ''' Removes paragraphs for the given query-paragraph pairs
     Input:
@@ -49,13 +52,13 @@ def add_paragraphs(connection,data):
         data            [(material_id, paragraph)...]                             
                         paragraph = {...}
     Output:
+        success         Boolean indicating success
 '''
-def remove_paragraphs(connection,data):
+def remove_paragraphs(connection, material_id, paragraph, rank):
     pa_collection = connection['synthesis-api'].paragraphs
     qy_collection = connection['synthesis-api'].queries
 
-    # TODO: do we need a try/catch?
-    for (material_id, paragraph, rank) in data:
+    try:
         # Finds the paragraph object
         paragraph_object = pa_collection.Paragraph.find_one(
             {'doi': paragraph['doi'], 'text': paragraph['text']})
@@ -64,7 +67,9 @@ def remove_paragraphs(connection,data):
             # Removes paragraph object from query  
             query = qy_collection.remove(
                 {'material_id': material_id, 'paragraph': paragraph_object['_id']})
-
+        return True
+    except:
+        return False
 
 ''' Gets a list of paragraphs ids related to the query
     Input: 
@@ -100,10 +105,11 @@ def get_paragraph_ids_of_query(connection, material_id, amt):
 def get_paragraphs_of_query(connection, material_id, amt):
     pa_collection = connection['synthesis-api'].paragraphs
     ids = list(get_paragraph_ids_of_query(connection, material_id, amt).limit(amt))
-    
+    if len(ids) == 0:
+        return []
     paragraph_query = [{'_id': item['paragraph']} for item in ids]
-
-    return pa_collection.find({"$or": paragraph_query}, {'_id': False})
+    
+    return list(pa_collection.find({"$or": paragraph_query}, {'_id': False}).limit(amt))
 
 ''' Validates if the paragraph-query given is a valid pair
     Input:
@@ -115,3 +121,6 @@ def validate_paragraph_query(connection, paragraph_id, material_id):
     qy_collection = connection['synthesis-api'].queries
     doc = qy_collection.Query.find_one({'material_id': material_id, 'paragraph': paragraph_id})
     return (doc is not None)
+
+def parse_feature_vector(fvstring):
+    return [int(s) for s in fvstring.split(',')]

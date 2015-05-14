@@ -1,0 +1,11 @@
+body {
+    font-family: sans-serif;
+}
+
+.responses{
+    margin-top: 10px;
+    min-width: 100px;
+    min-height: 50px;
+    max-width: 400px;
+    border: 1px solid black;
+}
