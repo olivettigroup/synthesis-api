@@ -3,8 +3,7 @@
 
 class ErrorFactory:
     structure = {'error_type': None
-                 'message': None
-                 }
+                 'message': None }
 
     default = {'error_type': 'Invalid',
                'message': 'Invalid'}

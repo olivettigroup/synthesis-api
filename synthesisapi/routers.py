@@ -22,7 +22,6 @@ connection.register([Paragraph])
 connection.register([Query])
 connection.register([Feedback])
 
-
 # ================== TESTING
 
 @app.route("/test")
@@ -113,7 +112,6 @@ def get_paragraphs(material_id):
     #       paragraphs (array)      Array of paragraph objects
     #                               (TODO) get rid of _id
     #       
-    # TODO: defaulting to returning 5??
     amt = 5
     return list(get_paragraphs_of_query(connection, material_id, amt).limit(amt))
 
