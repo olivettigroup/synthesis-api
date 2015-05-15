@@ -10,8 +10,9 @@ var DemoController = function() {
 
   var eventListeners = function() {
  
+    // ======================== UPDATING PARAGRAPH
     (function() {
-      $("#addParagraph").on("submit", function(e) {
+      $("#updateParagraph").on("submit", function(e) {
         e.preventDefault();
 
         material_id = $(this)[0].elements["material_id"].value;
@@ -30,8 +31,6 @@ var DemoController = function() {
           'feature_vector': '1,2,3'
         };  
 
-        console.log(data)
-
         $.ajax({
           datatype: 'json',
           type: 'POST',
@@ -43,6 +42,54 @@ var DemoController = function() {
         // alert(data['is_recipe']);
       }); 
     })();
+
+    // ======================== RECORDING MPID FEEDBACK
+    (function() {
+      $("#mpidFeedback").on("submit", function(e) {
+        e.preventDefault();
+
+        var data = {
+          'user_id': $(this)[0].elements["user_id"].value,
+          'paragraph_id': $(this)[0].elements["paragraph_id"].value,
+          'material_id': $(this)[0].elements["material_id"].value,
+          'value': $(this)[0].elements["value"].value
+        };  
+
+        $.ajax({
+          datatype: 'json',
+          type: 'POST',
+          url: '/record_feedback',
+          data: data
+        }).always(function(res){
+          $("#mpidFeedbackResponse").text(JSON.stringify(res));
+        });
+      }); 
+    })();
+
+    // ======================== RECORDING IS RECIPE FEEDBACK
+    (function() {
+      $("#isRecipeFeedback").on("submit", function(e) {
+        e.preventDefault();
+
+        var data = {
+          'user_id': $(this)[0].elements["user_id"].value,
+          'paragraph_id': $(this)[0].elements["paragraph_id"].value,
+          'material_id': $(this)[0].elements["material_id"].value,
+          'value': $(this)[0].elements["value"].value
+        };  
+
+        $.ajax({
+          datatype: 'json',
+          type: 'POST',
+          url: '/record_is_recipe_feedback',
+          data: data
+        }).always(function(res){
+          $("#isRecipeFeedbackResponse").text(JSON.stringify(res));
+        });
+      }); 
+    })();
+
+
   }
 
   return {

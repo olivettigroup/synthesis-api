@@ -98,7 +98,7 @@ def pull_feedback_data():
     else:
         is_related_recipe_feedback = 'Error: Could not retrieve.'
 
-    return {'related': is_related_recipe_feedback, 'is_recipe': is_recipe_feedback}
+    return jsonify(related=is_related_recipe_feedback, is_recipe=is_recipe_feedback)
 
 @app.route("/confirm_feedback_data_pulled", methods=['PUT'])
 def indicate_successful_pull():
@@ -111,13 +111,13 @@ def indicate_successful_pull():
     got_is_recipe = request.form["got_is_recipe"]
 
     if (got_related and got_is_recipe):
-        fb_helper.removeAllFeedbackBefore(connection, time)
+        result = fb_helper.removeAllFeedbackBefore(connection, time)
     elif (got_related):
-        fb_helper.removeAllRelatedFeedbackBefore(connection, time)
+        result = fb_helper.removeAllRelatedFeedbackBefore(connection, time)
     else:
-        fb_helper.removeAllIsRecipeFeedbackBefore(connection, time)
+        result = fb_helper.removeAllIsRecipeFeedbackBefore(connection, time)
 
-    return "success?" #TODO
+    return jsonify(success=result, error='')
  
 # =================== 3RD PARTIES - SYNTHESIS-API
 
@@ -149,39 +149,46 @@ def record_mpid_feedback():
     ftype = "IS_RELATED_RECIPE"
     user_id = request.form["user_id"]
     paragraph_id = request.form["paragraph_id"]
-    material_id = request.form["material_id"]  
-    isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
-    value = request.form["value"]
+    material_id = request.form["material_id"]    
 
     #Input Checking
-    if not isvalid:
-        return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
-    if value not in [-1, 1]:
-        return {'error': True, 'msg': "Not valid value"}
+    try:
+        value = int(request.form["value"])
+    except ValueError:
+        return jsonify(success=False, error='Not valid value (-1 or 1)')
+    if value not in (-1, 1):
+        return jsonify(success=False, error="Not valid value (-1 or 1)")
+    if not pa_helper.validate_paragraph_query(connection, paragraph_id, material_id):
+        return jsonify(success=False, error="Not valid material_id / paragraph_id pair")
     
     # Creating Feedback
-    fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
+    result = fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
 
     # TODO: add cooldown time so cant record from same user
-    return "is correct pair feedback"
+    return jsonify(success=result, error="")
 
 @app.route("/record_is_recipe_feedback", methods=['POST'])
 def record_is_recipe_feedback():
-    ftpye = "IS_RECIPE"
     # TODO probably want some authorization of 3rd party API?
+    ftpye = "IS_RECIPE"
     user_id = request.form["user_id"]
     paragraph_id = request.form["paragraph_id"]
     material_id = request.form["material_id"]   #TODO: might not want to require this later
     isvalid = pa_helper.validate_paragraph_query(connection, paragraph_id, material_id)
+    
+    # Input Checking
+    try:
+        value = request.form["value"]  
+    except ValueError:
+        return jsonify(success=False, error='Not valid value (-1 or 1)') 
+    if value not in (-1, 1):
+        return jsonify(success=False, error="Not valid value (-1 or 1)")
     if not isvalid:
-        return {'error': True, 'msg': "Not valid material_id / paragraph_id pair"}
-    value = request.form["value"]
-    if value not in [-1, 1]:
-        return {'error': True, 'msg': "Not valid value"}
-    ftype = "IS_RELATED_RECIPE"
+        return jsonify(success=False, error="Not valid material_id / paragraph_id pair")
 
-    fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
-    return "is recipe feedback"
+    result = fb_helper.createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
+    
+    return jsonify(success=result, error="")
 
 if __name__ == "__main__":
     app.run()

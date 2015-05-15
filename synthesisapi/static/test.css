@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
 }
 
+input {
+    margin-top: 5px;
+}
+
 .responses{
     margin-top: 10px;
     min-width: 100px;

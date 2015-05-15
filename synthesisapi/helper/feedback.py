@@ -9,7 +9,7 @@ def getAllFeedback(connection):
     try:
         cursor = fb_collection.Feedback.find()
     except TypeError:
-        return #error
+        return []
 
     return list(cursor.limit(cursor.count()))
 
@@ -37,9 +37,7 @@ def getIsRelatedRecipeFeedback(connection):
                 {'$match': {'type': 'IS_RELATED_RECIPE', 'material_id' : {'$exists': True}}},
                 {'$group': {'_id': {'paragraph_id': '$paragraph_id', 'material_id': '$material_id'}, 
                             "feedback": { '$push': '$value'} }}])
-    
-''' permanently removes feedback data from table
-'''
+
 def removeAllFeedbackBefore(connection, time):
     #   Removes all the feedback created before a given time
     #   Input:
@@ -47,9 +45,10 @@ def removeAllFeedbackBefore(connection, time):
     #   Output:
     fb_collection = connection['synthesis-api'].feedback
     try:
-        return fb_collection.remove({'date_creation': {'$lt': time}})
+        fb_collection.remove({'date_creation': {'$lt': time}})
+        return True
     except pymongo.errors.OperationFailure: 
-        return #todo error
+        return False
 
 def removeAllRelatedFeedbackBefore(connection, time):
     #   Removes all the related feedback created before a given time
@@ -58,9 +57,10 @@ def removeAllRelatedFeedbackBefore(connection, time):
     #   Output:
     fb_collection = connection['synthesis-api'].feedback
     try:
-        return fb_collection.remove({'type': 'IS_RELATED_RECIPE','date_creation': {'$lt': time}})
+        fb_collection.remove({'type': 'IS_RELATED_RECIPE','date_creation': {'$lt': time}})
+        return True
     except pymongo.errors.OperationFailure:
-        return #todo error
+        return False
 
 def removeAllIsRecipeFeedbackBefore(connection, time):
     #   Removes all the is recipe feedback created before a given time
@@ -69,13 +69,17 @@ def removeAllIsRecipeFeedbackBefore(connection, time):
     #   Output:
     fb_collection = connection['synthesis-api'].feedback
     try:
-        return fb_collection.remove({'type': 'IS_RECIPE','date_creation': {'$lt': time}})
+        fb_collection.remove({'type': 'IS_RECIPE','date_creation': {'$lt': time}})
+        return True
     except pymongo.errors.OperationFailure:
-        return #todo error
+        return False
 
-'''
-'''
 def createFeedback(connection, material_id, paragraph_id, user_id, ftype, value):
+    #   Creates a feedback object given parameters
+    #   Input:
+    #       
+    #   Output:
+    #       success         Boolean indicating success
     fb_collection = connection['synthesis-api'].feedback
     feedback = fb_collection.Feedback()
     feedback['material_id'] = material_id.decode('unicode-escape') 
@@ -83,5 +87,8 @@ def createFeedback(connection, material_id, paragraph_id, user_id, ftype, value)
     feedback['user_id'] = user_id.decode('unicode-escape')
     feedback['type'] = ftype.decode('unicode-escape')
     feedback['value'] = value
-
-    feedback.save()
+    try:
+        feedback.save()
+        return True
+    except pymongo.errors.OperationFailure:
+        return False

@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='test.css')}} "></script>
 </head>
 
-<title>Hello from Flask</title>
+<title>Synthesis API</title>
 {% if name %}
-  <h1>Hello {{ name }}!</h1>
+  <h1>API Test Page</h1>
 {% else %}
   <h1>Hello World!</h1>
 {% endif %}
@@ -20,9 +20,10 @@
     });
 </script>
 
-<form id="addParagraph">
-    <p> ADDING PARAGRAPH</p>
-    <input name="update_type" placeholder="UPDATE TYPE (-1 or 1)"> </input><br><br>
+<!-- ADDING PARAGRAPH -->
+<form id="updateParagraph">
+    <p> UPDATING PARAGRAPH</p>
+    <input name="update_type" placeholder="UPDATE TYPE (-1 or 1)"> </input><br>
     <input name="material_id" placeholder="MATERIAL ID"></input>
     <input name="doi" placeholder="DOI"></input>
     <input name="text" placeholder="TEXT"></input>
@@ -32,3 +33,37 @@
 
 <div id="addParagraphResponse" class="responses" ></div>
 
+<!-- RECORDING MPID FEEDBACK -->
+<form id="mpidFeedback">
+    <p> RECORD MPID FEEDBACK</p>
+    <input name="user_id" placeholder="USER ID"> </input><br>
+    <input name="material_id" placeholder="MATERIAL ID"></input>
+    <input name="paragraph_id" placeholder="PARAGRAPH ID"></input>
+    <input name="value" placeholder="VALUE (-1 or 1)"></input>
+    <input type="submit">
+</form>
+
+<div id="mpidFeedbackResponse" class="responses" ></div>
+
+<!-- RECORDING IS_RECIPE FEEDBACK -->
+<form id="isRecipeFeedback">
+    <p> RECORD IS RECIPE FEEDBACK</p>
+    <input name="user_id" placeholder="USER ID"> </input><br>
+    <input name="material_id" placeholder="MATERIAL ID"></input>
+    <input name="paragraph_id" placeholder="PARAGRAPH ID"></input>
+    <input name="value" placeholder="VALUE (-1 or 1)"></input>
+    <input type="submit">
+</form>
+
+<div id="isRecipeFeedbackResponse" class="responses" ></div>
+
+<!-- INDICATING SUCCESSFUL PULL -->
+<form id="successfulPull">
+    <p> SUCESSFUL PULL</p>
+    <input name="time" placeholder="TIME"> </input><br>
+    <input name="got_related" placeholder="GOT RELATED?"></input>
+    <input name="got_is_recipe" placeholder="GOT IS RECIPE?"></input>
+    <input type="submit">
+</form>
+
+<div id="successfulPullResponse" class="responses" ></div>
