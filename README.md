@@ -1,4 +1,4 @@
 # synthesis-api 
-[![Build Status](https://magnum.travis-ci.com/eddotman/synthesis-api.svg?token=Qp58uS5syWFs5JMLCgBb&branch=master)](https://travis-ci.org/eddotman/synthesis-api)
+[![Circle CI](https://circleci.com/gh/olivettigroup/synthesis-api.svg?style=svg&circle-token=224606a43088c3248ea1363602b326f8194c9d37)](https://circleci.com/gh/olivettigroup/synthesis-api)
 
 Codebase for synthesis API server
