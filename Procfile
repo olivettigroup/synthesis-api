@@ -1,1 +1,1 @@
-web: python synthesisapi/routers.py
+web: gunicorn --pythonpath synthesisapi/ routers:app --preload
