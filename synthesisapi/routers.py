@@ -4,6 +4,7 @@ from flask import Flask
 from models import Paragraph, Query, Feedback
 from flask import render_template
 from flask import request
+from os import environ 
 import helper.paragraph as pa_helper
 import helper.feedback as fb_helper
 
@@ -11,14 +12,14 @@ import helper.feedback as fb_helper
 # Database configuration
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
+MONGODB_URI = environ.get(MONGOLAB_URI)
 
 # Flask Application configuration
 app = Flask(__name__)
 app.config.from_object(__name__)
 
 # Connect to Database
-connection = Connection(app.config['MONGODB_HOST'],
-                        app.config['MONGODB_PORT'])
+connection = Connection(MONGODB_URI)
 
 connection.register([Paragraph])
 connection.register([Query])
