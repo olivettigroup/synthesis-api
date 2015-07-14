@@ -12,7 +12,7 @@ import helper.feedback as fb_helper
 # Database configuration
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
-MONGODB_URI = environ.get(MONGOLAB_URI)
+MONGODB_URI = environ.get('MONGOLAB_URI')
 
 # Flask Application configuration
 app = Flask(__name__)
