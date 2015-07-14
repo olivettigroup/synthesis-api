@@ -1,1 +1,1 @@
-web: gunicorn routers:app --log-file=-
+web: python synthesisapi/routers.py

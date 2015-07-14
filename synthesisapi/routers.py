@@ -26,6 +26,10 @@ connection.register([Feedback])
 
 # ================== TESTING
 
+@app.route('/')
+def main():
+    return 'Welcome to the Synthesis API! (Use POST to actually do things)'
+
 @app.route("/test")
 def test():
     return render_template('test.html', name='vicky')
