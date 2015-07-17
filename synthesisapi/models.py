@@ -28,13 +28,16 @@ class Paragraph(Document):
 
 # Query object
 class Query(Document):
+  '''
+  Models a query made to the API server 
+  '''
   __database__ = 'synthesis-api'
   __collection__ = 'queries'
 
   structure = {
     'material_id': unicode, 
     'paragraph': bson.ObjectId, # Holds one paragraph ID
-    'rank': int #Holds the rank of the paragraph given the query
+    'rank': int #Holds the relevance rank of the paragraph given the query (i.e. return order of paragraphs)
   }
 
   required_fields = ['paragraph']
@@ -45,6 +48,9 @@ class Query(Document):
 
 # Feedback Object
 class Feedback(Document):
+  '''
+  Models feedback given to the API server (for updating paragraph labels)
+  '''
   __database__ = 'synthesis-api'
   __collection__ = 'feedback'
 
@@ -53,7 +59,7 @@ class Feedback(Document):
     'paragraph_id': unicode,
     'user_id': unicode,         #id of the user who gave feedback
     'type': unicode,            #IS_RECIPE or IS_RELATED_RECIPE
-    'value': int,              #answer to the type question
+    'value': int,              #answer to the type question (-1 = False, 1 = True)
     'date_creation': datetime.datetime
   }
 

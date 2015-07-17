@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>synthesisapi.helper.paragraph &mdash; synthesis-api 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synthesis-api 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../../index.html" class="icon icon-home"> synthesis-api
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">synthesisapi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../synthesisapi.html">synthesisapi package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../synthesisapi.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../synthesisapi.helper.html">synthesisapi.helper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../synthesisapi.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../synthesisapi.models.html">synthesisapi.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../synthesisapi.routers.html">synthesisapi.routers module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../synthesisapi.html#module-synthesisapi">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">synthesis-api</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>synthesisapi.helper.paragraph</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for synthesisapi.helper.paragraph</h1><div class="highlight"><pre>
+<span class="c"># File containing helper functions dealing</span>
+<span class="c"># With paragraph and query objects</span>
+<span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<div class="viewcode-block" id="add_paragraphs"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.add_paragraphs">[docs]</a><span class="k">def</span> <span class="nf">add_paragraphs</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">material_id</span><span class="p">,</span> <span class="n">paragraph</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
+  <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">  Adds paragraphs to given query-paragraph pair</span>
+<span class="sd">  :param connection: mongodb connection with Paragraph, Query registered.</span>
+<span class="sd">  :type connection: Connection </span>
+
+<span class="sd">  :param material_id: the ID for the relevant material </span>
+<span class="sd">  :type material_id: unicode </span>
+
+<span class="sd">  :param paragraph: ???</span>
+<span class="sd">  :type paragraph: ???</span>
+
+<span class="sd">  :param rank: ???</span>
+<span class="sd">  :type rank: ???</span>
+<span class="sd">  </span>
+<span class="sd">  :returns: True/False indicating success </span>
+<span class="sd">  :rtype: bool </span>
+<span class="sd">  &#39;&#39;&#39;</span>
+  
+  <span class="n">pa_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">paragraphs</span>
+  <span class="n">qy_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queries</span>
+
+  <span class="c"># TODO: do we need a try/catch?</span>
+  <span class="c"># TODO: check it is correct format</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="c"># Creating a paragraph object if it does not exist</span>
+    <span class="n">paragraph_object</span> <span class="o">=</span> <span class="n">pa_collection</span><span class="o">.</span><span class="n">Paragraph</span><span class="o">.</span><span class="n">find_and_modify</span><span class="p">(</span>
+      <span class="p">{</span><span class="s">&#39;doi&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;doi&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]},</span>
+      <span class="n">update</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;$setOnInsert&#39;</span><span class="p">:</span> <span class="p">{</span> 
+        <span class="s">&#39;feature_vector&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;feature_vector&#39;</span><span class="p">],</span>
+        <span class="s">&#39;is_recipe&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;is_recipe&#39;</span><span class="p">],</span>
+        <span class="s">&#39;doi&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;doi&#39;</span><span class="p">],</span> 
+        <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]</span> <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="n">upsert</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+      <span class="n">new</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c"># Includes paragraph into query</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">qy_collection</span><span class="o">.</span><span class="n">Query</span><span class="o">.</span><span class="n">find_and_modify</span><span class="p">(</span>
+      <span class="p">{</span><span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="n">material_id</span><span class="p">,</span> <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">paragraph_object</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]},</span>
+      <span class="n">update</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="n">material_id</span><span class="p">,</span>
+        <span class="s">&#39;rank&#39;</span><span class="p">:</span> <span class="n">rank</span><span class="p">,</span>
+        <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">paragraph_object</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="n">upsert</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+      <span class="n">new</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">True</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</div>
+<span class="sd">&#39;&#39;&#39; Removes paragraphs for the given query-paragraph pairs</span>
+<span class="sd">  Input:</span>
+<span class="sd">    connection      mongodb connection</span>
+<span class="sd">            required: have registered Paragraph, Query</span>
+<span class="sd">  </span>
+<span class="sd">    data            [(material_id, paragraph)...]                             </span>
+<span class="sd">            paragraph = {...}</span>
+<span class="sd">  Output:</span>
+<span class="sd">    success         Boolean indicating success</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="remove_paragraphs"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.remove_paragraphs">[docs]</a><span class="k">def</span> <span class="nf">remove_paragraphs</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">material_id</span><span class="p">,</span> <span class="n">paragraph</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
+  <span class="n">pa_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">paragraphs</span>
+  <span class="n">qy_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queries</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="c"># Finds the paragraph object</span>
+    <span class="n">paragraph_object</span> <span class="o">=</span> <span class="n">pa_collection</span><span class="o">.</span><span class="n">Paragraph</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+      <span class="p">{</span><span class="s">&#39;doi&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;doi&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="n">paragraph</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]})</span>
+    
+    <span class="k">if</span> <span class="n">paragraph_object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="c"># Removes paragraph object from query  </span>
+      <span class="n">query</span> <span class="o">=</span> <span class="n">qy_collection</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span>
+        <span class="p">{</span><span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="n">material_id</span><span class="p">,</span> <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">paragraph_object</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]})</span>
+    <span class="k">return</span> <span class="bp">True</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</div>
+<span class="sd">&#39;&#39;&#39; Gets a list of paragraphs ids related to the query</span>
+<span class="sd">  Input: </span>
+<span class="sd">    connection      mongodb connection</span>
+<span class="sd">            required: have registered Paragraph, Query</span>
+<span class="sd">  </span>
+<span class="sd">    material_id     id of the given material requested data from</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Cursor to the list of ids</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="get_paragraph_ids_of_query"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.get_paragraph_ids_of_query">[docs]</a><span class="k">def</span> <span class="nf">get_paragraph_ids_of_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">material_id</span><span class="p">,</span> <span class="n">amt</span><span class="p">):</span>
+  <span class="n">qy_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queries</span>
+  <span class="c"># Currently just returns 5, not ranked. Sort later when rank means something</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">qy_collection</span><span class="o">.</span><span class="n">Query</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="n">material_id</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">},</span> <span class="n">limit</span><span class="o">=</span><span class="n">amt</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span> 
+    <span class="k">return</span> <span class="c">#error</span>
+
+</div>
+<span class="sd">&#39;&#39;&#39; Gets a list of paragraphs related to the query</span>
+<span class="sd">  Input: </span>
+<span class="sd">    connection      mongodb connection</span>
+<span class="sd">            required: have registered Paragraph, Query</span>
+<span class="sd">  </span>
+<span class="sd">    material_id     id of the given material requested data from</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Cursor to the list of paragraph objects</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="get_paragraphs_of_query"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.get_paragraphs_of_query">[docs]</a><span class="k">def</span> <span class="nf">get_paragraphs_of_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">material_id</span><span class="p">,</span> <span class="n">amt</span><span class="p">):</span>
+  <span class="n">pa_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">paragraphs</span>
+  <span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_paragraph_ids_of_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">material_id</span><span class="p">,</span> <span class="n">amt</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">amt</span><span class="p">))</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">[]</span>
+  <span class="n">paragraph_query</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;paragraph&#39;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
+  
+  <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pa_collection</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;$or&quot;</span><span class="p">:</span> <span class="n">paragraph_query</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">amt</span><span class="p">))</span>
+</div>
+<span class="sd">&#39;&#39;&#39; Validates if the paragraph-query given is a valid pair</span>
+<span class="sd">  Input:</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    True if it is a valid pair, false otherwise</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="validate_paragraph_query"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.validate_paragraph_query">[docs]</a><span class="k">def</span> <span class="nf">validate_paragraph_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">paragraph_id</span><span class="p">,</span> <span class="n">material_id</span><span class="p">):</span>
+  <span class="n">qy_collection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">[</span><span class="s">&#39;synthesis-api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queries</span>
+  <span class="n">doc</span> <span class="o">=</span> <span class="n">qy_collection</span><span class="o">.</span><span class="n">Query</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="n">material_id</span><span class="p">,</span> <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">paragraph_id</span><span class="p">})</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="parse_feature_vector"><a class="viewcode-back" href="../../../synthesisapi.helper.paragraph.html#synthesisapi.helper.paragraph.parse_feature_vector">[docs]</a><span class="k">def</span> <span class="nf">parse_feature_vector</span><span class="p">(</span><span class="n">fvstring</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">fvstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, MIT.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

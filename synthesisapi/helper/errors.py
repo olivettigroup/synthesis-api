@@ -2,14 +2,14 @@
 # by the API
 
 class ErrorFactory:
-    structure = {'error_type': None
+    structure = {'error_type': None,
                  'message': None }
 
     default = {'error_type': 'Invalid',
                'message': 'Invalid'}
 
     error_types = { 0: 'Invalid',
-                    1: 'Invalid Input'
+                    1: 'Invalid Input', 
                     2: 'Database Error'}
 
     def makeError(error_type, message):

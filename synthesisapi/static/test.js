@@ -58,7 +58,7 @@ var DemoController = function() {
         $.ajax({
           datatype: 'json',
           type: 'POST',
-          url: '/record_feedback',
+          url: '/record_is_related_feedback',
           data: data
         }).always(function(res){
           $("#mpidFeedbackResponse").text(JSON.stringify(res));

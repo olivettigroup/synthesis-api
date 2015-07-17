@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>synthesisapi.models &mdash; synthesis-api 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synthesis-api 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../index.html" class="icon icon-home"> synthesis-api
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">synthesisapi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../synthesisapi.html">synthesisapi package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.helper.html">synthesisapi.helper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.models.html">synthesisapi.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.routers.html">synthesisapi.routers module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#module-synthesisapi">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">synthesis-api</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>synthesisapi.models</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for synthesisapi.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">mongokit</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Connection</span><span class="p">,</span> <span class="n">Document</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">bson</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c"># Paragraph object</span>
+<div class="viewcode-block" id="Paragraph"><a class="viewcode-back" href="../../synthesisapi.models.html#synthesisapi.models.Paragraph">[docs]</a><span class="k">class</span> <span class="nc">Paragraph</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+  <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  Models a paragraph belonging to an article</span>
+<span class="sd">  &#39;&#39;&#39;</span>
+
+  <span class="n">__database__</span> <span class="o">=</span> <span class="s">&#39;predsynth&#39;</span>
+  <span class="n">__collection__</span> <span class="o">=</span> <span class="s">&#39;paragraphs&#39;</span>
+
+  <span class="n">structure</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;doi&#39;</span> <span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span> <span class="c">#doi of article the paragraph belongs to</span>
+    <span class="s">&#39;order&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="c">#which paragraph in the paper (i.e. sequence); 0-indexed</span>
+    <span class="s">&#39;parse_tree_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span> <span class="c">#Map to parse tree of this paragraph</span>
+    <span class="s">&#39;feature_vector&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="c">#calculated feature vector of Paragraph</span>
+    <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span> <span class="c">#stringified version of the paragraph</span>
+    <span class="s">&#39;is_recipe&#39;</span><span class="p">:</span> <span class="nb">bool</span> <span class="c">#if it is a recipe</span>
+  <span class="p">}</span>
+
+  <span class="n">required_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;doi&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">]</span>
+  <span class="n">default_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;feature_vector&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s">&#39;is_recipe&#39;</span><span class="p">:</span> <span class="bp">False</span>
+  <span class="p">}</span>
+
+<span class="c"># Query object</span></div>
+<div class="viewcode-block" id="Query"><a class="viewcode-back" href="../../synthesisapi.models.html#synthesisapi.models.Query">[docs]</a><span class="k">class</span> <span class="nc">Query</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+  <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  Models a query made to the API server </span>
+<span class="sd">  &#39;&#39;&#39;</span>
+  <span class="n">__database__</span> <span class="o">=</span> <span class="s">&#39;synthesis-api&#39;</span>
+  <span class="n">__collection__</span> <span class="o">=</span> <span class="s">&#39;queries&#39;</span>
+
+  <span class="n">structure</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span> 
+    <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">bson</span><span class="o">.</span><span class="n">ObjectId</span><span class="p">,</span> <span class="c"># Holds one paragraph ID</span>
+    <span class="s">&#39;rank&#39;</span><span class="p">:</span> <span class="nb">int</span> <span class="c">#Holds the rank of the paragraph given the query</span>
+  <span class="p">}</span>
+
+  <span class="n">required_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;paragraph&#39;</span><span class="p">]</span>
+
+  <span class="n">default_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">}</span>
+
+<span class="c"># Feedback Object</span></div>
+<div class="viewcode-block" id="Feedback"><a class="viewcode-back" href="../../synthesisapi.models.html#synthesisapi.models.Feedback">[docs]</a><span class="k">class</span> <span class="nc">Feedback</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+  <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  Models feedback given to the API server (for updating paragraph labels)</span>
+<span class="sd">  &#39;&#39;&#39;</span>
+  <span class="n">__database__</span> <span class="o">=</span> <span class="s">&#39;synthesis-api&#39;</span>
+  <span class="n">__collection__</span> <span class="o">=</span> <span class="s">&#39;feedback&#39;</span>
+
+  <span class="n">structure</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>     
+    <span class="s">&#39;paragraph_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>
+    <span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>         <span class="c">#id of the user who gave feedback</span>
+    <span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>            <span class="c">#IS_RECIPE or IS_RELATED_RECIPE</span>
+    <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>              <span class="c">#answer to the type question</span>
+    <span class="s">&#39;date_creation&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
+  <span class="p">}</span>
+
+  <span class="n">required_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;material_id&#39;</span><span class="p">,</span> <span class="s">&#39;paragraph_id&#39;</span><span class="p">,</span> <span class="s">&#39;user_id&#39;</span><span class="p">,</span> <span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, MIT.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

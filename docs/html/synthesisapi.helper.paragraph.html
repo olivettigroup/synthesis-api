@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>synthesisapi.helper.paragraph module &mdash; synthesis-api 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="synthesis-api 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> synthesis-api
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="simple">
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">synthesis-api</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>synthesisapi.helper.paragraph module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/synthesisapi.helper.paragraph.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-synthesisapi.helper.paragraph">
+<span id="synthesisapi-helper-paragraph-module"></span><h1>synthesisapi.helper.paragraph module<a class="headerlink" href="#module-synthesisapi.helper.paragraph" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.add_paragraphs">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">add_paragraphs</code><span class="sig-paren">(</span><em>connection</em>, <em>material_id</em>, <em>paragraph</em>, <em>rank</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#add_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.add_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds paragraphs to given query-paragraph pair
+:param connection: mongodb connection with Paragraph, Query registered.
+:type connection: Connection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; the ID for the relevant material</li>
+<li><strong>paragraph</strong> &#8211; <p>???</p>
+</li>
+<li><strong>rank</strong> &#8211; <p>???</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True/False indicating success</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.get_paragraph_ids_of_query">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">get_paragraph_ids_of_query</code><span class="sig-paren">(</span><em>connection</em>, <em>material_id</em>, <em>amt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#get_paragraph_ids_of_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.get_paragraph_ids_of_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.get_paragraphs_of_query">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">get_paragraphs_of_query</code><span class="sig-paren">(</span><em>connection</em>, <em>material_id</em>, <em>amt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#get_paragraphs_of_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.get_paragraphs_of_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.parse_feature_vector">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">parse_feature_vector</code><span class="sig-paren">(</span><em>fvstring</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#parse_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.parse_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.remove_paragraphs">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">remove_paragraphs</code><span class="sig-paren">(</span><em>connection</em>, <em>material_id</em>, <em>paragraph</em>, <em>rank</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#remove_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.remove_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="synthesisapi.helper.paragraph.validate_paragraph_query">
+<code class="descclassname">synthesisapi.helper.paragraph.</code><code class="descname">validate_paragraph_query</code><span class="sig-paren">(</span><em>connection</em>, <em>paragraph_id</em>, <em>material_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/helper/paragraph.html#validate_paragraph_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.helper.paragraph.validate_paragraph_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, MIT.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
