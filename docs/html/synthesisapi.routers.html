@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>synthesisapi.routers module &mdash; synthesis-api 1.0 documentation</title>
+  <title>1. synthesisapi.routers module &mdash; synthesis-api 1.0 documentation</title>
   
 
   
@@ -30,7 +30,9 @@
   
 
   
-    <link rel="top" title="synthesis-api 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="synthesis-api 1.0 documentation" href="index.html"/>
+        <link rel="next" title="2. synthesisapi.models module" href="synthesisapi.models.html"/>
+        <link rel="prev" title="Welcome to synthesis-api’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -69,7 +71,9 @@
         
           
           
-              <ul class="simple">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">1. Core API Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthesisapi.models.html">2. Data Structures</a></li>
 </ul>
 
           
@@ -94,7 +98,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>synthesisapi.routers module</li>
+    <li>1. synthesisapi.routers module</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -108,57 +112,254 @@
           <div role="main" class="document">
             
   <div class="section" id="module-synthesisapi.routers">
-<span id="synthesisapi-routers-module"></span><h1>synthesisapi.routers module<a class="headerlink" href="#module-synthesisapi.routers" title="Permalink to this headline">¶</a></h1>
+<span id="synthesisapi-routers-module"></span><h1>1. synthesisapi.routers module<a class="headerlink" href="#module-synthesisapi.routers" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="synthesisapi.routers.get_paragraphs">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">get_paragraphs</code><span class="sig-paren">(</span><em>material_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.get_paragraphs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves a list of paragraphs indicating steps for given material_id (GET ROUTE)</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (TODO) type of material_id</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of paragraph objects</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.get_paragraphs_formatted">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">get_paragraphs_formatted</code><span class="sig-paren">(</span><em>material_id</em>, <em>format='json'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#get_paragraphs_formatted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.get_paragraphs_formatted" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Wrapper for get_paragraphs, with a format specified.</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; type of material_id</li>
+<li><strong>format</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Format the data will be in</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of formatted paragraph objects</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Implement material id</p>
+</div>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Implement LaTeX</p>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.indicate_successful_pull">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">indicate_successful_pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#indicate_successful_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.indicate_successful_pull" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Function used by internal users to confirm they have pulled data (PUT ROUTE)</p>
+<p>Wipes out all feedback older than the pull request which was succesfully pulled</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the date + time they pulled the data (in unicode timestamp secs)</li>
+<li><strong>got_related</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If you successfully got is_related_recipe</li>
+<li><strong>got_is_recipe</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If you successfully got is_recipe</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Whether or not error was successful</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.main">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Default main route - doesn&#8217;t actually do anything.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.pull_feedback_data">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">pull_feedback_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#pull_feedback_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.pull_feedback_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Pulls two types of consolidated feedback data for all paragraphs: (GET ROUTE)</p>
+<ol class="arabic simple">
+<li>Feedback on if a paragraph is a recipe</li>
+<li>Feedback on if a paragraph is a recipe for a specific material</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">JSON with consolidated feedback</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&#39;related&#39;</span><span class="p">:</span> <span class="n">is_related_recipe_feedback</span><span class="p">,</span> 
+  <span class="s">&#39;is_recipe&#39;</span><span class="p">:</span> <span class="n">is_recipe_feedback</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Required: Internal API Key Access</p>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.record_is_recipe_feedback">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">record_is_recipe_feedback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#record_is_recipe_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.record_is_recipe_feedback" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Records feedback for if a paragraph is related to the correct material</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of user submitting the feedback</li>
+<li><strong>paragraph_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of paragraph</li>
+<li><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of relevant material</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Success or failure of request</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-3">
+<p class="first admonition-title">Todo</p>
+<p class="last">Add cooldown time so can&#8217;t record from same user</p>
+</div>
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last">3rd party API key validation</p>
+</div>
+</dd></dl>
 
 <dl class="function">
-<dt id="synthesisapi.routers.record_mpid_feedback">
-<code class="descclassname">synthesisapi.routers.</code><code class="descname">record_mpid_feedback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#record_mpid_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.record_mpid_feedback" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="synthesisapi.routers.record_is_related_feedback">
+<code class="descclassname">synthesisapi.routers.</code><code class="descname">record_is_related_feedback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#record_is_related_feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.record_is_related_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records feedback for if a paragraph is related to the correct material</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of user submitting the feedback</li>
+<li><strong>paragraph_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of paragraph</li>
+<li><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; ID of relevant material</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Success or failure of request</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">Add cooldown time so can&#8217;t record from same user</p>
+</div>
+<div class="admonition-todo admonition" id="index-6">
+<p class="first admonition-title">Todo</p>
+<p class="last">3rd party API key validation</p>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.test">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.test" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Renders view for the API testing form</p>
+<div class="admonition-todo admonition" id="index-7">
+<p class="first admonition-title">Todo</p>
+<p class="last">Disable in production mode</p>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="synthesisapi.routers.update_paragraphs">
 <code class="descclassname">synthesisapi.routers.</code><code class="descname">update_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/routers.html#update_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.routers.update_paragraphs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates the list of paragraphs and queries (POST/PUT ROUTE)</p>
+<p>(Params are all REST params)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>update_type</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 1 = addition, -1 subtraction</li>
+<li><strong>material_id</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Relevant material ID</li>
+<li><strong>paragraph_text</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; raw text of the paragraph</li>
+<li><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Relevance ranking for this paragraph (i.e. relevance to target material)</li>
+<li><strong>feature_vector</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Each element in array concatenated by &#8221;,&#8221; e.g. &#8220;1,2,3&#8221; = [1,2,3]</li>
+<li><strong>is_recipe</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 0 = not a recipe paragraph, 1 = is a recipe paragraph</li>
+<li><strong>doi</strong> (<a class="reference external" href="https://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; DOI of the paper the paragraph belongs to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Success or error (returns error message on error)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/library/json.html#module-json" title="(in Python v2.7)">json</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-8">
+<p class="first admonition-title">Todo</p>
+<p class="last">Internal API Key required</p>
+</div>
+</dd></dl>
 
 </div>
 
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="synthesisapi.models.html" class="btn btn-neutral float-right" title="2. synthesisapi.models module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to synthesis-api’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

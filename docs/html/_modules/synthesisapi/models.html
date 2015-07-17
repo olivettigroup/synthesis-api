@@ -71,22 +71,8 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">synthesisapi</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../synthesisapi.html">synthesisapi package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.helper.html">synthesisapi.helper package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#submodules">Submodules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.models.html">synthesisapi.models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../synthesisapi.routers.html">synthesisapi.routers module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../synthesisapi.html#module-synthesisapi">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../synthesisapi.routers.html">1. Core API Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../synthesisapi.models.html">2. Data Structures</a></li>
 </ul>
 
           
@@ -164,7 +150,7 @@
   <span class="n">structure</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;material_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span> 
     <span class="s">&#39;paragraph&#39;</span><span class="p">:</span> <span class="n">bson</span><span class="o">.</span><span class="n">ObjectId</span><span class="p">,</span> <span class="c"># Holds one paragraph ID</span>
-    <span class="s">&#39;rank&#39;</span><span class="p">:</span> <span class="nb">int</span> <span class="c">#Holds the rank of the paragraph given the query</span>
+    <span class="s">&#39;rank&#39;</span><span class="p">:</span> <span class="nb">int</span> <span class="c">#Holds the relevance rank of the paragraph given the query (i.e. return order of paragraphs)</span>
   <span class="p">}</span>
 
   <span class="n">required_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;paragraph&#39;</span><span class="p">]</span>
@@ -186,7 +172,7 @@
     <span class="s">&#39;paragraph_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>
     <span class="s">&#39;user_id&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>         <span class="c">#id of the user who gave feedback</span>
     <span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">,</span>            <span class="c">#IS_RECIPE or IS_RELATED_RECIPE</span>
-    <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>              <span class="c">#answer to the type question</span>
+    <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>              <span class="c">#answer to the type question (-1 = False, 1 = True)</span>
     <span class="s">&#39;date_creation&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
   <span class="p">}</span>
 

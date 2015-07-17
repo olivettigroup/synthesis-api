@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>synthesisapi.models module &mdash; synthesis-api 1.0 documentation</title>
+  <title>2. synthesisapi.models module &mdash; synthesis-api 1.0 documentation</title>
   
 
   
@@ -30,7 +30,8 @@
   
 
   
-    <link rel="top" title="synthesis-api 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="synthesis-api 1.0 documentation" href="index.html"/>
+        <link rel="prev" title="1. synthesisapi.routers module" href="synthesisapi.routers.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -69,7 +70,9 @@
         
           
           
-              <ul class="simple">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="synthesisapi.routers.html">1. Core API Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">2. Data Structures</a></li>
 </ul>
 
           
@@ -94,7 +97,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>synthesisapi.models module</li>
+    <li>2. synthesisapi.models module</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -108,7 +111,7 @@
           <div role="main" class="document">
             
   <div class="section" id="module-synthesisapi.models">
-<span id="synthesisapi-models-module"></span><h1>synthesisapi.models module<a class="headerlink" href="#module-synthesisapi.models" title="Permalink to this headline">¶</a></h1>
+<span id="synthesisapi-models-module"></span><h1>2. synthesisapi.models module<a class="headerlink" href="#module-synthesisapi.models" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="synthesisapi.models.Feedback">
 <em class="property">class </em><code class="descclassname">synthesisapi.models.</code><code class="descname">Feedback</code><span class="sig-paren">(</span><em>doc=None</em>, <em>gen_skel=True</em>, <em>collection=None</em>, <em>lang='en'</em>, <em>fallback_lang='en'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synthesisapi/models.html#Feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synthesisapi.models.Feedback" title="Permalink to this definition">¶</a></dt>
@@ -116,7 +119,7 @@
 <p>Models feedback given to the API server (for updating paragraph labels)</p>
 <dl class="attribute">
 <dt id="synthesisapi.models.Feedback.authorized_types">
-<code class="descname">authorized_types</code><em class="property"> = [&lt;type 'unicode'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;type 'basestring'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.binary.Binary'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Feedback.authorized_types" title="Permalink to this definition">¶</a></dt>
+<code class="descname">authorized_types</code><em class="property"> = [&lt;class 'bson.binary.Binary'&gt;, &lt;type 'unicode'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;type 'basestring'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Feedback.authorized_types" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -138,7 +141,7 @@
 <p>Models a paragraph belonging to an article</p>
 <dl class="attribute">
 <dt id="synthesisapi.models.Paragraph.authorized_types">
-<code class="descname">authorized_types</code><em class="property"> = [&lt;type 'unicode'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;type 'basestring'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.binary.Binary'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Paragraph.authorized_types" title="Permalink to this definition">¶</a></dt>
+<code class="descname">authorized_types</code><em class="property"> = [&lt;class 'bson.binary.Binary'&gt;, &lt;type 'unicode'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;type 'basestring'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Paragraph.authorized_types" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -165,7 +168,7 @@
 <p>Models a query made to the API server</p>
 <dl class="attribute">
 <dt id="synthesisapi.models.Query.authorized_types">
-<code class="descname">authorized_types</code><em class="property"> = [&lt;type 'unicode'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;type 'basestring'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.binary.Binary'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Query.authorized_types" title="Permalink to this definition">¶</a></dt>
+<code class="descname">authorized_types</code><em class="property"> = [&lt;class 'bson.binary.Binary'&gt;, &lt;type 'unicode'&gt;, &lt;type 'bool'&gt;, &lt;type 'NoneType'&gt;, &lt;type 'datetime.datetime'&gt;, &lt;type 'long'&gt;, &lt;type 'dict'&gt;, &lt;type 'list'&gt;, &lt;type 'basestring'&gt;, &lt;type 'float'&gt;, &lt;type '_sre.SRE_Pattern'&gt;, &lt;type 'int'&gt;, &lt;class 'bson.code.Code'&gt;, &lt;class 'mongokit.schema_document.CustomType'&gt;, &lt;class 'uuid.UUID'&gt;, &lt;class 'bson.dbref.DBRef'&gt;, &lt;class 'bson.objectid.ObjectId'&gt;]</em><a class="headerlink" href="#synthesisapi.models.Query.authorized_types" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -190,6 +193,13 @@
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="synthesisapi.routers.html" class="btn btn-neutral" title="1. synthesisapi.routers module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

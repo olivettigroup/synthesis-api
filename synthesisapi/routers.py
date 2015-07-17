@@ -44,6 +44,7 @@ def test():
 def update_paragraphs():
   '''
   Updates the list of paragraphs and queries (POST/PUT ROUTE)
+  
   (Params are all REST params)
 
   :param update_type: 1 = addition, -1 subtraction
@@ -61,10 +62,10 @@ def update_paragraphs():
   :param doi: DOI of the paper the paragraph belongs to 
   :type doi: unicode 
 
-  .. todo:: Internal API Key required 
-
   :returns: Success or error (returns error message on error)
   :rtype: json 
+
+  .. todo:: Internal API Key required 
   '''
 
   try:
@@ -97,18 +98,23 @@ def update_paragraphs():
 def pull_feedback_data():
   '''
   Pulls two types of consolidated feedback data for all paragraphs: (GET ROUTE)
-        1) Feedback on if a paragraph is a recipe
-        2) Feedback on if a paragraph is a recipe for a specific material
   
-  .. todo:: Required: Internal API Key Access
+  1. Feedback on if a paragraph is a recipe
+  2. Feedback on if a paragraph is a recipe for a specific material
+
     
-  :returns:
+  :returns: JSON with consolidated feedback 
+
   ::
-        {
-          'related': is_related_recipe_feedback, 
-          'is_recipe': is_recipe_feedback
-        }
+
+    {
+      'related': is_related_recipe_feedback, 
+      'is_recipe': is_recipe_feedback
+    }
+
   :rtype: json 
+
+  .. todo:: Required: Internal API Key Access
   '''
  
   # Getting is recipe feedback
@@ -132,7 +138,10 @@ def pull_feedback_data():
 def indicate_successful_pull():
   '''
   Function used by internal users to confirm they have pulled data (PUT ROUTE)
+
   Wipes out all feedback older than the pull request which was succesfully pulled 
+
+  (Params are all REST params)
 
   :param time: the date + time they pulled the data (in unicode timestamp secs)
   :type time: int 
@@ -166,10 +175,12 @@ def get_paragraphs(material_id):
   '''
   Retrieves a list of paragraphs indicating steps for given material_id (GET ROUTE)
 
+  (Params are all REST params)
+
   :param material_id: (TODO) type of material_id
   :type material_id: str 
 
-  :returns:  Array of paragraph objects -(TODO) get rid of _id 
+  :returns:  Array of paragraph objects
   :rtype: json    
   '''
 
@@ -182,13 +193,18 @@ def get_paragraphs_formatted(material_id, format="json"):
   '''
   Wrapper for get_paragraphs, with a format specified.
 
-  :param material_id: (TODO) type of material_id
+  (Params are all REST params)
+
+  :param material_id: type of material_id
   :type material_id: str 
-  :param format: Format the data will be in (TODO) Implement beyond JSON - i.e. LateX?
+  :param format: Format the data will be in
   :type format: unicode
 
   :returns: Array of formatted paragraph objects
   :rtype: json   
+
+  .. todo:: Implement material id 
+  .. todo:: Implement LaTeX 
   '''
 
   if (format == 'json'):
@@ -201,6 +217,8 @@ def record_is_related_feedback():
   '''
   Records feedback for if a paragraph is related to the correct material 
 
+  (Params are all REST params)
+
   :param user_id: ID of user submitting the feedback 
   :type user_id: unicode
   :param paragraph_id: ID of paragraph 
@@ -208,11 +226,11 @@ def record_is_related_feedback():
   :param material_id: ID of relevant material 
   :type material_id: unicode 
 
-  .. todo :: add cooldown time so cant record from same user
-  .. todo :: 3rd party API key validation 
-
   :returns: Success or failure of request 
   :rtype: json
+
+  .. todo :: Add cooldown time so can't record from same user
+  .. todo :: 3rd party API key validation 
   '''
 
   ftype = "IS_RELATED_RECIPE"
@@ -240,18 +258,20 @@ def record_is_recipe_feedback():
   '''
   Records feedback for if a paragraph is related to the correct material 
 
+  (Params are all REST params)
+
   :param user_id: ID of user submitting the feedback 
   :type user_id: unicode
   :param paragraph_id: ID of paragraph 
   :type paragraph_id: unicode 
   :param material_id: ID of relevant material 
-  :type material_id: unicode 
-
-  .. todo :: add cooldown time so cant record from same user
-  .. todo :: 3rd party API key validation 
+  :type material_id: unicode  
 
   :returns: Success or failure of request 
   :rtype: json
+
+  .. todo :: Add cooldown time so can't record from same user
+  .. todo :: 3rd party API key validation
   '''
 
   ftpye = "IS_RECIPE"

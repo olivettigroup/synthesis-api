@@ -9,9 +9,10 @@ Welcome to synthesis-api's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+  :numbered:
 
-  modules
+  Core API Methods <synthesisapi.routers>
+  Data Structures <synthesisapi.models>
 
 
 
