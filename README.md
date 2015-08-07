@@ -1,4 +1,4 @@
-# synthesis-api 
+# The Synthesis Project - Public API / Web Interface
 [![Circle CI](https://circleci.com/gh/olivettigroup/synthesis-api.svg?style=svg&circle-token=224606a43088c3248ea1363602b326f8194c9d37)](https://circleci.com/gh/olivettigroup/synthesis-api)
 
 Public-facing API that interfaces with the synthesis database
