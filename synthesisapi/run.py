@@ -1,7 +1,6 @@
 from eve import Eve
-
+e = Eve()
 def app():
-  e = Eve()
   e.run()
 
 if __name__ == '__main__':
