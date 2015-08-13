@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath synthesisapi/ run:app --preload
+web: python synthesisapi/run.py
