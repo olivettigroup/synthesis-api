@@ -11,11 +11,11 @@ def add_paragraphs(connection, material_id, paragraph, rank):
   :param material_id: the ID for the relevant material 
   :type material_id: unicode 
 
-  :param paragraph: ???
-  :type paragraph: ???
+  :param paragraph: The paragraph object
+  :type paragraph: dict
 
-  :param rank: ???
-  :type rank: ???
+  :param rank: Relevance ranking of paragraph to material
+  :type rank: int
   
   :returns: True/False indicating success 
   :rtype: bool 
@@ -63,6 +63,20 @@ def add_paragraphs(connection, material_id, paragraph, rank):
     success         Boolean indicating success
 '''
 def remove_paragraphs(connection, material_id, paragraph, rank):
+  '''
+  Removes paragraphs for the given query-paragraph pairs
+
+  :param connection: mongoDB connection object 
+  :type connection: Connection
+  :param material_id: MPID of the relevant material 
+  :type material_id: unicode 
+  :param paragraph: Paragraph object 
+  :type paragraph: dict 
+  :param rank: Relevance rank of paragraph to material
+
+  :returns: Success/Failure of operation 
+  :rtype: bool 
+  '''
   pa_collection = connection['synthesis-api'].paragraphs
   qy_collection = connection['synthesis-api'].queries
 

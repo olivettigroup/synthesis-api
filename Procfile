@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath synthesisapi/ routers:app --preload
+web: gunicorn --pythonpath synthesisapi/ run:app --preload
