@@ -1,10 +1,7 @@
 from schemas import (target_entity)
+from os import (environ)
 
-MONGO_HOST = 'localhost'
-MONGO_PORT = 27017
-MONGO_USERNAME = ''
-MONGO_PASSWORD = ''
-MONGO_DBNAME = 'synthapi'
+MONGO_URI = environ.get('MONGOLAB_URI')
 
 PUBLIC_METHODS = ['GET']
 PUBLIC_ITEM_METHODS = ['GET']
