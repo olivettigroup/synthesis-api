@@ -4,14 +4,8 @@ target_entity = {
     'paragraphs': {
       'type': 'list'
     },
-    'mpid': {
-      'type': 'string',
-      'required': True,
-      'unique': True
+    'mpids': {
+      'type': 'list',
     }
-  },
-  'additional_lookup': {
-    'url': 'regex("[\w]+")',
-    'field': 'mpid'
   }
 }
