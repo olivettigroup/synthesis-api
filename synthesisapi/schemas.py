@@ -6,6 +6,9 @@ target_entity = {
     },
     'mpids': {
       'type': 'list'
+    },
+    'aliases': {
+      'type': 'list'
     }
   }
 }
