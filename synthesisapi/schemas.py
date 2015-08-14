@@ -5,7 +5,7 @@ target_entity = {
       'type': 'list'
     },
     'mpids': {
-      'type': 'list',
+      'type': 'list'
     }
   }
 }
