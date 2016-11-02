@@ -49,7 +49,7 @@ Here, the `[material identifier]` can be a chemical formula (e.g. `TiO2`) or an 
         'temp_hist_x': (list of floats) [ x-values (degrees C) for a normalized temperature usage histogram ],
         'temp_hist_y': (list of floats) [ y-values (arb. units) for a normalized temperature usage histogram ],
         'common_precursors': (list of strings) [ list of top-used precursors, solvents, etc. ]
-        'dois': (list) [ article DOIs, where each DOI corresponds to the source of the paragraph with matching list index ]
+        'dois': (list of strings) [ article DOIs, where each DOI corresponds to the source of the paragraph with matching list index ]
     }
 
 Here, the `[material identifier]` can be a chemical formula (e.g. `TiO2`) or an MPID (as defined in the [**Materials Project**](http://materialsproject.org)). Note that the returned data may correspond to a broader category of material than specified in the `[material identifier]` in the case of using MPIDs. If `success` is `false`, then all other fields will be `null`.
