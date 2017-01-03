@@ -1,4 +1,4 @@
-from schemas import (target_entity)
+from schemas import (material)
 from os import (environ)
 
 MONGO_URI = environ.get('MONGOLAB_URI')
@@ -10,6 +10,5 @@ RESOURCE_METHODS = ['GET']
 ITEM_METHODS = ['GET']
 
 DOMAIN = {
-  'materials': target_entity
+  'materials': material
 }
-

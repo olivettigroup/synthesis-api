@@ -1,13 +1,21 @@
-target_entity = {
+material = {
   'item_title': 'material',
   'schema': {
-    'paragraphs': {
+    'sample_dois': {
       'type': 'list'
     },
-    'mpids': {
+
+    'associated_materials': {
       'type': 'list'
     },
-    'aliases': {
+    'temperature_histogram': {
+      'type': 'dict',
+      'schema': {
+        'x': {'type': 'list'},
+        'y': {'type': 'list'}
+      }
+    },
+    'synthesis_descriptions': {
       'type': 'list'
     }
   }
