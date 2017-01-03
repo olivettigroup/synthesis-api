@@ -1,6 +1,15 @@
 material = {
   'item_title': 'material',
+  'additional_lookup': {
+         'url': 'regex("[\w]+")',
+         'field': 'name',
+     },
   'schema': {
+    'name': {
+      'type': 'string',
+      'unique': True,
+      'required': True
+    },
     'dois': {
       'type': 'list'
     },
