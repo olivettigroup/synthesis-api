@@ -22,7 +22,7 @@ material = {
     'topics': {
       'type': 'dict',
     },
-    'temperature_histogram': {
+    'temperature_kde': {
       'type': 'dict',
       'schema': {
         'temperatures': {'type': 'list'},
