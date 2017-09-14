@@ -16,6 +16,12 @@ material = {
     'associated_materials': {
       'type': 'list'
     },
+    'associated_operations': {
+      'type': 'list'
+    },
+    'topics': {
+      'type': 'dict',
+    },
     'temperature_histogram': {
       'type': 'dict',
       'schema': {
